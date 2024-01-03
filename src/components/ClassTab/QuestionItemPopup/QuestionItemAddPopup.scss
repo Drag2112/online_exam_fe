@@ -1,0 +1,25 @@
+.question-item-add-popup-modal {
+    z-index: 1300 !important;
+    font-family: 'IBM Plex Sans';
+}
+
+.question-item-add-popup-title {
+    font-family: 'IBM Plex Sans' !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+.question-item-add-popup-backdrop-modal {
+    z-index: 1300 !important;
+}
+
+.question-item-add-popup-confirm-button {
+    width: 110px;
+    margin: 0 5px !important;
+}
+
+.question-item-add-popup-cancel-button {
+    width: 110px;
+    margin: 0 5px !important;
+    background-color: #a1a1a1 !important;
+}

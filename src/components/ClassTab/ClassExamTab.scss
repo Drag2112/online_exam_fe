@@ -1,0 +1,66 @@
+.class-exam-container-0 {
+    background-color: #ffffff;
+    height: 100%;
+    margin: 10px 10px 10px 10px;
+}
+
+.class-exam-container-1 {
+    padding: 20px 25px 10px 25px;
+}
+
+.class-exam-breadcrum-li {
+    font-size: 18px;
+    color: #376fd0;
+}
+
+.class-exam-typography-root-01 {
+    font-size: 18px !important;
+    color: #376fd0;
+    font-weight: 400 !important;
+}
+
+.class-exam-typography-root-01:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.class-exam-typography-root-02 {
+    font-size: 18px !important;
+    color: #376fd0;
+    font-weight: 600 !important;
+}
+
+.class-exam-container-2 {
+    padding: 15px 75px;
+    min-width: 600px;
+}
+
+.class-exam-add-question-btn {
+    min-width: 160px !important;
+}
+
+.class-exam-add-question-popup-modal {
+    z-index: 3000 !important;
+    font-family: 'IBM Plex Sans';
+}
+
+.class-exam-add-question-popup-title {
+    font-family: 'IBM Plex Sans' !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+.class-exam-add-question-popup-backdrop-modal {
+    z-index: 3000 !important;
+}
+
+.class-exam-add-question-popup-confirm-button {
+    width: 110px;
+    margin: 0 5px !important;
+}
+
+.class-exam-add-question-popup-cancel-button {
+    width: 110px;
+    margin: 0 5px !important;
+    background-color: #a1a1a1 !important;
+}

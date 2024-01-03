@@ -1,0 +1,69 @@
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
+}
+
+@import '~bootstrap/scss/bootstrap';
+
+.about-us-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	bottom: 50px;
+	margin-left: 35px;
+	cursor: pointer;
+	z-index: 1200;
+}
+
+.about-us-title {
+	font-family: 'IBM Plex Sans';
+	font-weight: 700;
+	font-size: 16px;
+	color: #074E9F;
+	vertical-align: middle;
+	margin-left: 8px;
+}
+
+.MuiInputBase-root {
+	font-family: 'IBM Plex Sans' !important;
+}
+
+.MuiInputLabel-root {
+	font-family: 'IBM Plex Sans' !important;
+}
+
+.MuiMenuItem-root {
+	font-family: 'IBM Plex Sans' !important;
+}
+
+.MuiTypography-root {
+	font-family: 'IBM Plex Sans' !important;
+}
+
+.MuiTableCell-root {
+	font-family: 'IBM Plex Sans' !important;
+}
+
+.MuiButtonBase-root {
+	font-family: 'IBM Plex Sans' !important;
+}
+
+.MuiChip-root {
+	font-family: 'IBM Plex Sans' !important;
+}
+
+@media screen and (max-width: 650px) {
+	.about-us-container {
+		bottom: 75px;
+	}
+}

@@ -1,0 +1,38 @@
+.class-tab-table-header {
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    color: #376fd0 !important;
+    background-color: rgba(55,111,208,0.125) !important;
+}
+
+.class-tab-table-join-modal {
+    z-index: 3000 !important;
+    font-family: 'IBM Plex Sans';
+}
+
+.class-tab-table-join-backdrop-modal {
+    z-index: 3000 !important;
+}
+
+.class-tab-table-join-title {
+    font-family: 'IBM Plex Sans' !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+.class-tab-table-join-confirm-button {
+    width: 100px;
+    margin: 0 5px !important;
+}
+
+.class-tab-table-join-cancel-button {
+    width: 100px;
+    margin: 0 5px !important;
+    background-color: #a1a1a1 !important;
+}
+
+.class-tab-table-join-button-root {
+    font-size: 12px !important;
+    width: 120px !important;
+    height: 28px !important;
+}

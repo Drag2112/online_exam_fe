@@ -1,0 +1,35 @@
+.add-exam-popup-modal {
+    z-index: 3000 !important;
+    font-family: 'IBM Plex Sans';
+}
+
+.add-exam-popup-title {
+    font-family: 'IBM Plex Sans' !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+.add-exam-popup-backdrop-modal {
+    z-index: 3000 !important;
+}
+
+.add-exam-popup-text-field {
+    margin-bottom: 15px;
+}
+
+.add-exam-popup-warning {
+    color: red;
+    font-size: 13px;
+    font-family: 'IBM Plex Sans'
+}
+
+.add-exam-popup-confirm-button {
+    width: 110px;
+    margin: 0 5px !important;
+}
+
+.add-exam-popup-cancel-button {
+    width: 110px;
+    margin: 0 5px !important;
+    background-color: #a1a1a1 !important;
+}

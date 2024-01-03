@@ -1,0 +1,25 @@
+.delete-user-popup-modal {
+    z-index: 3000 !important;
+    font-family: 'IBM Plex Sans';
+}
+
+.delete-user-popup-title {
+    font-family: 'IBM Plex Sans' !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+.delete-user-popup-backdrop-modal {
+    z-index: 3000 !important;
+}
+
+.delete-user-popup-confirm-button {
+    width: 100px;
+    margin: 0 5px !important;
+}
+
+.delete-user-popup-cancel-button {
+    width: 100px;
+    margin: 0 5px !important;
+    background-color: #a1a1a1 !important;
+}

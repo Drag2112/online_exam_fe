@@ -1,0 +1,74 @@
+.dashboard-tab-container-0 {
+    background-color: #ffffff;
+    height: 100%;
+    margin: 10px 10px 10px 10px;
+}
+
+.dashboard-tab-title {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'IBM Plex Sans';
+    color: #376fd0;
+    margin-bottom: 10px;
+}
+
+.dashboard-tab-cards {
+    padding: 25px 25px 10px 25px;
+}
+
+.dashboard-tab-charts {
+    padding: 5px 25px 10px 25px;
+}
+
+.dashboard-tab-chart-1 {
+    border: 1px solid #d9d6d6;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 10px;
+    min-width: 350px;
+}
+
+.dashboard-tab-chart-2 {
+    border: 1px solid #d9d6d6;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 10px;
+    min-width: 350px;
+}
+
+.dashboard-tab-chart-2-title {
+    font-weight: 600;
+    font-size: 15px;
+    font-family: 'IBM Plex Sans';
+    margin-bottom: 10px;
+    color: #5a5757;
+}
+
+.dashboard-tab-detail {
+    padding: 5px 25px 10px 25px;
+    margin-bottom: 50px;
+}
+
+.dashboard-tab-detail-item {
+    margin-left: 20px;
+    width: 180px;
+    cursor: pointer;
+}
+
+.dashboard-tab-detail-item-icon {
+    color: #376fd0;
+    margin-right: 12px;
+    width: 10px !important;
+}
+
+.dashboard-tab-detail-item-text {
+    color: #2d64c4;
+    font-weight: 400;
+    font-size: 15px;
+    font-family: 'IBM Plex Sans';
+    text-decoration: underline;
+}
+
+.dashboard-tab-margin-bottom {
+    height: 50px;
+}
