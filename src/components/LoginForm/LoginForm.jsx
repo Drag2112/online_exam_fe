@@ -10,7 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 import { LOCAL_STORAGE_KEY } from '../../config/memory.config';
 import { ToastId } from '../../config/app.config';
 import { initToast } from '../../utils/helper';
-import API from '../../api/api';
+import { API } from '../../api/api';
 import { toast } from 'react-toastify';
 import './LoginForm.scss';
 
@@ -75,6 +75,7 @@ const LoginForm = () => {
                         const decodedResult = jwtDecode(accessToken)
                         localStorage.setItem(LOCAL_STORAGE_KEY.USER_ID, decodedResult?.userId?.toString())
                         localStorage.setItem(LOCAL_STORAGE_KEY.USER_NAME, decodedResult?.userName?.toString())
+                        localStorage.setItem(LOCAL_STORAGE_KEY.FULL_NAME, decodedResult?.fullName?.toString())
                         localStorage.setItem(LOCAL_STORAGE_KEY.FUNCTION_CODES, decodedResult?.functionCodes?.join(';'))
                         localStorage.setItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN, accessToken)
                         

@@ -10,7 +10,9 @@ const ClassProvider = ({children}) => {
     const [openQuestionAddPopup, setOpenQuestionAddPopup] = useState(false)
     const [openQuestionEditPopup, setOpenQuestionEditPopup] = useState(false)
     const [questionEdit, setQuestionEdit] = useState({questionNumber: 0, questionType: '', questionContent: '', results: []})
-
+    const [reloadDocument, setReloadDocument] = useState(false)
+    const [reloadCreatedExamList, setReloadCreatedExamList] = useState(false)
+    
     const value = {
         openAddClassPopup, setOpenAddClassPopup,
         openAddDocumentPopup, setOpenAddDocumentPopup,
@@ -18,7 +20,9 @@ const ClassProvider = ({children}) => {
         questions, setQuestions,
         openQuestionAddPopup, setOpenQuestionAddPopup,
         openQuestionEditPopup, setOpenQuestionEditPopup,
-        questionEdit, setQuestionEdit
+        questionEdit, setQuestionEdit,
+        reloadDocument, setReloadDocument,
+        reloadCreatedExamList, setReloadCreatedExamList
     }
 
     return (

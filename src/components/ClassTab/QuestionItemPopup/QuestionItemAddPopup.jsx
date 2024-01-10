@@ -16,8 +16,14 @@ const QuestionItemAddPopup = (props) => {
     const [questionType, setQuestionType] = useState(QuestionType.Type_1)
     const [questionContent, setQuestionContent] = useState('')
     const [results, setResults] = useState([{resultKey: 1, resultValue: '', isCorrect: false}])
+    const [warningMessage, setWarningMessage] = useState('')
 
-    const handleClosePopupQuestion = () => context.setOpenQuestionAddPopup(false)
+    const handleClosePopupQuestion = () => {
+        setQuestionContent('')
+        setQuestionType(QuestionType.Type_1)
+        setWarningMessage('')
+        context.setOpenQuestionAddPopup(false)
+    }
 
     const handleChangeQuestionContent = (event) => {
         setQuestionContent(event.target.value)
@@ -83,6 +89,33 @@ const QuestionItemAddPopup = (props) => {
     }
 
     const handleClickConfirmQuestion = () => {
+        if (!questionContent) {
+            setWarningMessage('Vui lòng nhập nội dung câu hỏi!')
+            return
+        }
+
+        const existCorrectResult = results.find(item => item.isCorrect === true)
+        if (!existCorrectResult) {
+            if (questionType === QuestionType.Type_1) {
+                setWarningMessage('Vui lòng tick chọn đáp án đúng của câu hỏi!')
+            } else if (questionType === QuestionType.Type_2) {
+                setWarningMessage('Vui lòng tick chọn ít nhất một đáp án đúng của câu hỏi!')
+            }
+            
+            return
+        }
+
+        const existEmptyResult = results.find(item => item.resultValue === '')
+        if (existEmptyResult) {
+            if (questionType === QuestionType.Type_3) {
+                setWarningMessage(`Câu trả lời đang để trống!`)
+            } else {
+                setWarningMessage(`Đáp án thứ ${existEmptyResult.resultKey} đang để trống!`)
+            }
+            
+            return
+        }
+
         const newQuestion = { questionNumber, questionType, questionContent, results }
         context.setQuestions([...context.questions, newQuestion])
         setQuestionType(QuestionType.Type_1)
@@ -102,7 +135,7 @@ const QuestionItemAddPopup = (props) => {
                 <div>
                     <Stack direction='row'>
                         <TextField variant='outlined' label='Nội dung câu hỏi' placeholder='Nhập nội dung câu hỏi' fullWidth multiline rows={4}
-                            value={questionContent} onChange={handleChangeQuestionContent}
+                            value={questionContent} onChange={handleChangeQuestionContent} onKeyDown={() => setWarningMessage('')}
                         />
                         <Stack direction='column' spacing={2} width='265px' minWidth='265px' marginLeft={2}>
                             <FormControl fullWidth>
@@ -135,7 +168,7 @@ const QuestionItemAddPopup = (props) => {
                     </Stack>
                     {results.map(result => (
                         (questionType === QuestionType.Type_1 && (
-                            <Stack direction='row' alignItems='center' spacing={1} marginTop={2} marginLeft={1} marginRight={2}>
+                            <Stack direction='row' alignItems='center' spacing={1} marginTop={2} marginLeft={1} marginRight={2} marginBottom={2}>
                                 <Radio name='radio-buttons' value={result.resultKey} checked={result.isCorrect} onChange={handleClickSelectResult}/>
                                 <TextField variant='standard' label='' placeholder='Nhập câu trả lời cho lựa chọn' fullWidth 
                                     value={result.resultValue} onChange={(event) => handleChangeResultValue(result.resultKey, event.target.value)}
@@ -146,7 +179,7 @@ const QuestionItemAddPopup = (props) => {
                             </Stack>
                         )) ||
                         (questionType === QuestionType.Type_2 && (
-                            <Stack direction='row' alignItems='center' spacing={1} marginTop={2} marginX={2}>
+                            <Stack direction='row' alignItems='center' spacing={1} marginTop={2} marginX={2} marginBottom={2}>
                                 <Checkbox name='radio-buttons' value={result.resultKey} checked={result.isCorrect} onChange={handleClickSelectResult}/>
                                 <TextField variant='standard' label='' placeholder='Nhập câu trả lời cho lựa chọn' fullWidth 
                                     value={result.resultValue} onChange={(event) => handleChangeResultValue(result.resultKey, event.target.value)}
@@ -157,14 +190,17 @@ const QuestionItemAddPopup = (props) => {
                             </Stack>
                         )) || 
                         (questionType === QuestionType.Type_3 && (
-                            <Stack direction='row' alignItems='center' spacing={1} marginTop={2} marginX={2}>
+                            <Stack direction='row' alignItems='center' spacing={1} marginTop={2} marginX={2} marginBottom={2}>
                                 <TextField variant='standard' label='' placeholder='Nhập câu trả lời cho lựa chọn' fullWidth
                                     value={result.resultValue} onChange={(event) => handleChangeResultValue(result.resultKey, event.target.value)}
                                 />
                             </Stack>
                         ))
                     ))}
-                    <Stack direction='row' justifyContent='center' marginTop={3}>
+                    <div>
+                        <span className='question-item-add-popup-warning-message'>{warningMessage}</span>
+                    </div>
+                    <Stack direction='row' justifyContent='center' marginTop={2}>
                         <Button variant='contained' className='question-item-add-popup-confirm-button' onClick={handleClickConfirmQuestion}>Thêm</Button>
                         <Button variant='contained' className='question-item-add-popup-cancel-button' onClick={handleClosePopupQuestion}>Hủy</Button>
                     </Stack>

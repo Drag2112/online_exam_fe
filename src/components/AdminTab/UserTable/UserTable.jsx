@@ -18,7 +18,7 @@ import { AdminContext } from '../../../context/AdminProvider';
 import EditUserPopup from '../EditUserPopup/EditUserPopup';
 import ResetPasswordPopup from '../ResetPasswordPopup/ResetPasswordPopup';
 import DeleteUserPopup from '../DeleteUserPopup/DeleteUserPopup';
-import API from '../../../api/api';
+import {API} from '../../../api/api';
 import { toast } from 'react-toastify'; 
 import { initToast, formatPhoneNumber } from '../../../utils/helper';
 import { ToastId } from '../../../config/app.config';
@@ -162,7 +162,7 @@ const UserTable = (props) => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-            <EditUserPopup user={userAction}/>
+            <EditUserPopup user={userAction} setRefreshUserTable={setSubmit}/>
             <ResetPasswordPopup user={userAction}/>
             <DeleteUserPopup user={userAction} setRefreshUserTable={setSubmit}/>
         </div>

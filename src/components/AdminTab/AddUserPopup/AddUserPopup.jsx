@@ -20,7 +20,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AdminContext } from '../../../context/AdminProvider';
 import dayjs from 'dayjs';
 import moment from 'moment';
-import API from '../../../api/api';
+import {API} from '../../../api/api';
 import { DefaultPassword, ToastId } from '../../../config/app.config';
 import { toast } from 'react-toastify'; 
 import { initToast } from '../../../utils/helper';
@@ -161,7 +161,7 @@ const AddUserPopup = (props) => {
                                                 onMouseDown={handleMouseDownPassword}
                                                 edge="end"
                                             >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            {showPassword ? <Visibility /> : <VisibilityOff />}
                                             </IconButton>
                                         </InputAdornment>
                                     }

@@ -6,7 +6,8 @@ import { useQueryParams, useSetQueryParams } from '../../../hook';
 import { QUERY_PARAM_KEY, ROUTE_PATH } from '../../../config/routes.config';
 import './AddExamPopup.scss';
 
-const AddExamPopup = () => {
+const AddExamPopup = (props) => {
+    const { className } = props
     const classContext = useContext(ClassContext)
     const queryParams = useQueryParams()
     const setQueryParams = useSetQueryParams()
@@ -52,6 +53,7 @@ const AddExamPopup = () => {
 
             setQueryParams(ROUTE_PATH.CLASS_EXAM, {
                 ...queryParams,
+                [QUERY_PARAM_KEY.CLASS_NAME]: className,
                 [QUERY_PARAM_KEY.EXAM_ID]: 'create',
                 [QUERY_PARAM_KEY.EXAM_NAME]: newExamName,
                 [QUERY_PARAM_KEY.EXAM_TIME]: newExamTime,

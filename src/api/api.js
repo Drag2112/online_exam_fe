@@ -8,4 +8,6 @@ const API = {
     classService: new classService(apiInstance)
 }
 
-export default API;
+export {
+    API
+}

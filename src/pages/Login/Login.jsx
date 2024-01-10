@@ -8,7 +8,7 @@ const Login = () => {
     return (
         <ThemeProvider theme={createTheme()}>
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
-                <Header isAuthen={false}/>
+                <Header/>
                 <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
                     <Box component="main" sx={{ backgroundColor: '#f1f1f1', flexGrow: 1 }}>
                         <img className='login-background-image' src={loginBackgroundImg} alt='Background_Image'/>

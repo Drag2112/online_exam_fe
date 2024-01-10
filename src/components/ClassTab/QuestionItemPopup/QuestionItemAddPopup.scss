@@ -13,6 +13,14 @@
     z-index: 1300 !important;
 }
 
+.question-item-add-popup-warning-message {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'IBM Plex Sans';
+    color: red;
+    padding-left: 20px;
+}
+
 .question-item-add-popup-confirm-button {
     width: 110px;
     margin: 0 5px !important;

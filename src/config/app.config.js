@@ -31,7 +31,19 @@ export const QuestionTypeName = {
 export const ToastId = {
     Login: 'login-id',
     CreateClass: 'create-class-id',
+    AddDocument: 'add-document-id',
+    DownloadDocument: 'download-document-id',
+    CreateExam: 'create-exam-id',
+    DeleteExam: 'delete-exam-id',
+    SubmitExam: 'submit-exam-id',
     CreateUser: 'create-user-id',
+    UpdateUserId: 'update-user-id',
     SearchUser: 'search-user-id',
-    LockUser: 'lock-user-id'
+    LockUser: 'lock-user-id',
+    ResetPassword: 'reset-password-id'
+}
+
+export const ExamRoomActionType = {
+    VIEW: 'view',
+    JOIN: 'join'
 }

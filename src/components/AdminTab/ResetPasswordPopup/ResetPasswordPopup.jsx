@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AdminContext } from '../../../context/AdminProvider';
 import { Modal } from 'react-bootstrap';
 import { Button, IconButton } from '@mui/material';
@@ -7,6 +7,10 @@ import InputLabel from '@mui/material/InputLabel';
 import { InputAdornment, OutlinedInput } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DefaultPassword } from '../../../config/app.config';
+import { API } from '../../../api/api';
+import { toast } from 'react-toastify'; 
+import { initToast } from '../../../utils/helper';
+import { ToastId } from '../../../config/app.config';
 import './ResetPasswordPopup.scss'
 
 const ResetPasswordPopup = (props) => {
@@ -34,6 +38,44 @@ const ResetPasswordPopup = (props) => {
         context.setOpenResetPassPopup(false)
     }
 
+    useEffect(() => {
+        if (confirmReset) {
+            const postData = async () => {
+                initToast(ToastId.ResetPassword)
+                try {
+                    const resultApi = await API.authenticationService.resetPassword({
+                        username: user?.user_name || '',
+                        newPassword: password
+                    })
+                    if (resultApi && resultApi.data && resultApi.data.code === 0) {
+                        toast.update(ToastId.ResetPassword, { 
+                            render: "Reset mật khẩu người dùng thành công", 
+                            type: "success", 
+                            isLoading: false, 
+                            autoClose: 2000 
+                        })
+                    } else {
+                        toast.update(ToastId.ResetPassword, { 
+                            render: resultApi.data.message || "Reset mật khẩu người dùng thất bại", 
+                            type: "error", 
+                            isLoading: false, 
+                            autoClose: 3000 
+                        })
+                    }
+                } catch(err) {
+                    toast.update(ToastId.ResetPassword, { 
+                        render: err.response.data.message || "Reset mật khẩu người dùng thất bại", 
+                        type: "error", 
+                        isLoading: false, 
+                        autoClose: 3000 
+                    })
+                }
+                setConfirmReset(false)
+            }
+            postData()
+        }
+    }, [confirmReset])
+
     return (
         <Modal centered className='reset-password-popup-modal' backdropClassName='reset-password-popup-backdrop-modal'
             show={context.openResetPassPopup} onHide={handleClosePopup}
@@ -43,7 +85,7 @@ const ResetPasswordPopup = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <div>
-                    <div className='mb-3'>Reset password của user <strong>{user?.userName || ''}</strong> về password:</div>
+                    <div className='mb-3'>Reset password của user <strong>{user?.user_name || ''}</strong> về password:</div>
                     <FormControl variant="outlined" fullWidth>
                         <InputLabel htmlFor="outlined-adornment-password">Mật khẩu reset</InputLabel>
                         <OutlinedInput type={showPassword ? 'text' : 'password'}

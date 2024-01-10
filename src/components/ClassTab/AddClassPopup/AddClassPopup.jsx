@@ -13,7 +13,7 @@ import { ClassContext } from '../../../context/ClassProvider';
 import { toast } from 'react-toastify'; 
 import { initToast } from '../../../utils/helper';
 import { ToastId } from '../../../config/app.config';
-import API from '../../../api/api';
+import {API} from '../../../api/api';
 import './AddClassPopup.scss'
 
 

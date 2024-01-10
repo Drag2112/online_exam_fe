@@ -42,7 +42,7 @@ const StatusBar = (props) => {
                     <CheckCircleIcon className="dashboard-tab-card-icon" />
                     <span className="dashboard-tab-card-key">Điểm trung bình</span>
                 </div>
-                <div className="dashboard-tab-card-value">{data.avg_score}</div>
+                <div className="dashboard-tab-card-value">{Number(data.avg_score).toFixed(2)}</div>
             </div>
         </div>
     );

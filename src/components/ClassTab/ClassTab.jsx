@@ -5,7 +5,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import { ClassContext } from '../../context/ClassProvider';
 import React, { useContext, useEffect, useState } from 'react';
 import AddClassPopup from './AddClassPopup/AddClassPopup';
-import API from '../../api/api';
+import {API} from '../../api/api';
 import { toast } from 'react-toastify'; 
 import { initToast } from '../../utils/helper';
 import { ToastId } from '../../config/app.config';
@@ -95,19 +95,23 @@ const ClassTab = () => {
                         <div className='d-flex flex-row row align-items-center mb-3'>
                             <div className='col-8 class-container-title'>Danh sách các lớp học hiện có trên hệ thống</div>
                             <div className='col-4 d-flex justify-content-end'>
-                                <Button variant='contained' startIcon={<AddBoxIcon fontSize='small' />} classes={{root: 'class-tab-button-root'}}
-                                    sx={{width: '150px', height: '30px', fontSize: '14px'}} onClick={handleClickAddClassButton}
-                                >
-                                    Tạo lớp học
-                                </Button>
+                                {functionCodes.includes(FUNCTION_CODE.CREATE_CLASS) && (
+                                    <Button variant='contained' startIcon={<AddBoxIcon fontSize='small' />} classes={{root: 'class-tab-button-root'}}
+                                        sx={{width: '150px', height: '30px', fontSize: '14px'}} onClick={handleClickAddClassButton}
+                                    >
+                                        Tạo lớp học
+                                    </Button>
+                                )}
                             </div>
                         </div>
                         <DataTable rows={dataTable} setRefreshDataTable={setRefreshDataTable} setRefreshJoinedList={setRefreshJoinedList}/>
                     </div>
-                    <div className='class-container-1'>
-                        <div className='class-container-title'>Các lớp đã tham gia</div>
-                        <JoinedClassList rows={joinedList}/>
-                    </div>
+                    {!functionCodes.includes(FUNCTION_CODE.CREATE_CLASS) && (
+                        <div className='class-container-1'>
+                            <div className='class-container-title'>Các lớp đã tham gia</div>
+                            <JoinedClassList rows={joinedList}/>
+                        </div>
+                    )}
                     <div style={{height: '40px'}}></div>
                     <AddClassPopup setRefreshDataTable={setRefreshDataTable}/>
                 </div> :

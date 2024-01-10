@@ -7,7 +7,7 @@ import { ChartConfig } from '../../config/app.config';
 import { getLastSevenDay } from '../../utils/helper';
 import { LOCAL_STORAGE_KEY } from '../../config/memory.config.js';
 import { AccessDenied } from '../shared';
-import API from '../../api/api.js';
+import {API} from '../../api/api.js';
 import { FUNCTION_CODE } from '../../config/authorization.config.js';
 import './DashboardTab.scss';
 

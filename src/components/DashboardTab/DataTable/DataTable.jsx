@@ -32,7 +32,7 @@ const DataTable = (props) => {
                             <TableCell align='right'>{row.total_student}</TableCell>
                             <TableCell align='right'>{row.total_exam}</TableCell>
                             <TableCell align='right'>{row.total_joined_exam}</TableCell>
-                            <TableCell align='right'>{row.avg_score}</TableCell>
+                            <TableCell align='right'>{Number(row.avg_score).toFixed(2)}</TableCell>
                         </TableRow>
                     ))}
                     </TableBody>

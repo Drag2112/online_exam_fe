@@ -7,13 +7,17 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 import Modal from 'react-bootstrap/Modal';
 import { useEffect, useState } from 'react';
-import API from '../../../api/api';
+import {API} from '../../../api/api';
 import { toast } from 'react-toastify'; 
 import { initToast } from '../../../utils/helper';
 import { ToastId } from '../../../config/app.config';
 import { LOCAL_STORAGE_KEY } from '../../../config/memory.config';
+import { FUNCTION_CODE } from '../../../config/authorization.config';
+import { useQueryParams, useSetQueryParams } from '../../../hook';
+import { QUERY_PARAM_KEY, ROUTE_PATH } from '../../../config/routes.config';
 import './DataTable.scss';
 
 const DataTable = (props) => {
@@ -22,13 +26,24 @@ const DataTable = (props) => {
     const [submitJoin, setSubmitJoin] = useState(false)
     const [classIdJoin, setClassIdJoin] = useState(0)
 
+    const queryParams = useQueryParams()
+    const setQueryParams = useSetQueryParams()
+
     const userId = localStorage.getItem(LOCAL_STORAGE_KEY.USER_ID)
+    const functionCodes = localStorage.getItem(LOCAL_STORAGE_KEY.FUNCTION_CODES)?.split(';') || []
 
     const handleCloseConfirmPopup = () => setShowConfirmPopup(false)
 
     const handleClickJoinButton = (classId) => {
         setShowConfirmPopup(true)
         setClassIdJoin(classId)
+    }
+
+    const handleClickViewButton = (classId) => {
+        setQueryParams(ROUTE_PATH.CLASS_DETAIL, {
+            ...queryParams,
+            [QUERY_PARAM_KEY.CLASS_ID]: classId
+        })
     }
 
     const handleClickConfirmJoinButton = () => {
@@ -98,11 +113,18 @@ const DataTable = (props) => {
                             <TableCell align='right'>{row.total_student}</TableCell>
                             <TableCell align='right'>{row.total_exam}</TableCell>
                             <TableCell align='center'>
-                                <Button variant='contained' startIcon={<PersonAddIcon fontSize='small' />} classes={{root: 'class-tab-table-join-button-root'}}
-                                    sx={{width: '135px', height: '30px', fontSize: '14px'}} onClick={() => handleClickJoinButton(row.class_id)}
-                                >
-                                    Tham gia
-                                </Button>
+                                {functionCodes.includes(FUNCTION_CODE.CREATE_CLASS) ?
+                                    <Button variant='contained' startIcon={<DonutSmallIcon fontSize='small' />} classes={{root: 'class-tab-table-join-button-root'}}
+                                        sx={{width: '135px', height: '30px', fontSize: '14px'}} onClick={() => handleClickViewButton(row.class_id)}
+                                    >
+                                        Chi tiết
+                                    </Button> :
+                                    <Button variant='contained' startIcon={<PersonAddIcon fontSize='small' />} classes={{root: 'class-tab-table-join-button-root'}}
+                                        sx={{width: '135px', height: '30px', fontSize: '14px'}} onClick={() => handleClickJoinButton(row.class_id)}
+                                    >
+                                        Tham gia
+                                    </Button>
+                                }
                             </TableCell>
                         </TableRow>
                     ))}

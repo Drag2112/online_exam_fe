@@ -30,7 +30,11 @@ const AboutUs = (props) => {
                         </tr>
                         <tr>
                             <td className='aboutus-body-container-table-c1'>Hỗ trợ:</td>
-                            <td className='aboutus-body-container-table-row-value'>nguyenhailong@gmail.com</td>
+                            <td className='aboutus-body-container-table-row-value'>longqtubqn@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <td className='aboutus-body-container-table-c1'></td>
+                            <td className='aboutus-body-container-table-row-value'>huy315674@gmail.com</td>
                         </tr>
                     </table>
                 </div>

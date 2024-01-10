@@ -17,6 +17,7 @@ export const ROUTE_PATH = {
     CLASS: '/class',
     CLASS_DETAIL: '/class/detail',
     CLASS_EXAM: '/class/exam',
+    CLASS_EXAM_ROOM: '/class/exam/room',
     ADMIN: '/admin',
     NOT_FOUND: '*'
 }
@@ -30,7 +31,9 @@ export const menu = [
 
 export const QUERY_PARAM_KEY = {
     CLASS_ID: 'class_id',
+    CLASS_NAME: 'class_name',
     EXAM_ID: 'exam_id',
     EXAM_NAME: 'exam_name',
     EXAM_TIME: 'exam_time',
+    EXAM_ACTION_TYPE: 'exam_action_type',
 }

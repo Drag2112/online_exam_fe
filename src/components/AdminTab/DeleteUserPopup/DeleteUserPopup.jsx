@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AdminContext } from '../../../context/AdminProvider';
 import { Modal } from 'react-bootstrap';
 import { Button } from '@mui/material';
-import API from '../../../api/api';
+import {API} from '../../../api/api';
 import { toast } from 'react-toastify'; 
 import { initToast } from '../../../utils/helper';
 import { ToastId } from '../../../config/app.config';
