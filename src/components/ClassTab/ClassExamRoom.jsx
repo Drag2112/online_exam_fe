@@ -119,7 +119,9 @@ const ClassExamRoom = () => {
                             ...queryParams,
                             [QUERY_PARAM_KEY.EXAM_ACTION_TYPE]: ExamRoomActionType.VIEW
                         })
-                        setOpenPopup(true)
+                        if (remainSeconds === 0) {
+                            setOpenPopup(true)
+                        }
                         toast.update(ToastId.SubmitExam, { 
                             render: 'Submit kết quả thi thành công',
                             type: "success", 
