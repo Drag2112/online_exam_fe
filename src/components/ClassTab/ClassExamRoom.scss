@@ -57,3 +57,23 @@
     color: #074E9F;
     margin-top: 14px !important;
 }
+
+.class-exam-room-popup-modal {
+    z-index: 3000 !important;
+    font-family: 'IBM Plex Sans';
+}
+
+.class-exam-room-popup-backdrop-modal {
+    z-index: 3000 !important;
+}
+
+.class-exam-room-popup-title {
+    font-family: 'IBM Plex Sans' !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+}
+
+.class-exam-room-popup-ok-button {
+    width: 100px;
+    margin: 0 5px !important;
+}

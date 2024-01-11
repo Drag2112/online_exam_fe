@@ -1,5 +1,6 @@
 import { Box, Breadcrumbs, Button, Stack, TextField, Typography } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { Modal } from 'react-bootstrap';
 import { useQueryParams, useSetQueryParams } from '../../hook';
 import { useState, useContext, useEffect } from 'react';
 import { ClassContext } from '../../context/ClassProvider';
@@ -25,7 +26,8 @@ const ClassExamRoom = () => {
     const [startTime, setStartTime] = useState(moment().format('YYYY-MM-DD HH:mm:ss'))
     const [endTime, setEndTime] = useState(moment().format('YYYY-MM-DD HH:mm:ss'))
     const [submitExam, setSubmitExam] = useState(false)
-
+    const [openPopup, setOpenPopup] = useState(false)
+    
     const handleClickRouteClass = () => {
         if (queryParams[QUERY_PARAM_KEY.EXAM_ACTION_TYPE] === ExamRoomActionType.JOIN && !submitExam) {
             alert('Vui lòng submit kết quả làm bài trước khi thoát ra khỏi phòng thi!')
@@ -49,6 +51,8 @@ const ClassExamRoom = () => {
         setSubmitExam(true)
     }
 
+    const handleClosePopup = () => setOpenPopup(false)
+
     // Show cảnh báo cho người dùng về các thay đổi có thể không được lưu nếu reload/tắt trang
     window.addEventListener('beforeunload', (event) => {
         event.preventDefault()
@@ -71,7 +75,6 @@ const ClassExamRoom = () => {
         // Tự động submit bài thi khi hết giờ
         if (remainSeconds === 0) {
             handleSubmitExamResult()
-            alert('Hết giờ!')
         }
     
         return () => {
@@ -116,6 +119,7 @@ const ClassExamRoom = () => {
                             ...queryParams,
                             [QUERY_PARAM_KEY.EXAM_ACTION_TYPE]: ExamRoomActionType.VIEW
                         })
+                        setOpenPopup(true)
                         toast.update(ToastId.SubmitExam, { 
                             render: 'Submit kết quả thi thành công',
                             type: "success", 
@@ -231,6 +235,21 @@ const ClassExamRoom = () => {
                     ))}
                 </Box>
             </div>
+            <Modal centered className='class-exam-room-popup-modal' backdropClassName='class-exam-room-popup-backdrop-modal'
+                show={openPopup} onHide={handleClosePopup}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title className='class-exam-room-popup-title'>Thông báo</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Stack direction='column'>
+                        <Typography>Thời gian làm bài đã hết!</Typography>
+                        <div className='d-flex flex-row-reverse mt-3'>
+                            <Button variant='contained' className='class-exam-room-popup-ok-button' onClick={handleClosePopup}>Ok</Button>
+                        </div>
+                    </Stack>
+                </Modal.Body>
+            </Modal>
         </div>
     )
 }
