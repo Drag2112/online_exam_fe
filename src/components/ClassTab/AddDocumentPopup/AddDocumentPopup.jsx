@@ -102,7 +102,7 @@ const AddDocumentPopup = (props) => {
                         <span className='add-document-popup-warning-message'>{warningMessage}</span>
                     </div>
                     <div className='d-flex flex-row-reverse mt-3'>
-                        <Button variant='contained' className='add-document-popup-cancel-button' onClick={handleClosePopup}>Hủy</Button>
+                        <Button variant='outlined' classes={{root: 'mui-cancel-button-root'}} className='add-document-popup-cancel-button' onClick={handleClosePopup}>Hủy</Button>
                         <Button variant='contained' className='add-document-popup-confirm-button' onClick={handleClickAddButton}>Thêm</Button>
                     </div>
                 </div>

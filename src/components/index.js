@@ -9,3 +9,6 @@ export { default as ClassDetailTab } from './ClassTab/ClassDetailTab.jsx';
 export { default as ClassExamTab } from './ClassTab/ClassExamTab.jsx';
 export { default as ClassExamRoom } from './ClassTab/ClassExamRoom.jsx';
 export { default as AdminTab } from './AdminTab/AdminTab.jsx';
+export { default as ProfileTab } from './ProfileTab/ProfileTab.jsx';
+export { default as ClassLearningResult } from './LearningResult/ClassLearningResult.jsx';
+export { default as ExamManagementTab } from './ExamManagement/ExamManagement.jsx';

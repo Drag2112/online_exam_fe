@@ -5,4 +5,8 @@ export { default as ClassDetail } from './Class/ClassDetail.jsx';
 export { default as ClassExam } from './Class/ClassExam.jsx';
 export { default as ClassExamRoom } from './Class/ClassExamRoom.jsx';
 export { default as Admin } from './Admin/Admin.jsx';
+export { default as Profile } from './Profile/Profile.jsx';
+export { default as LearningResult } from './LearningResult/LearningResult.jsx';
+export { default as StudentLearningResut } from './StudenLearningResult/StudenLearningResult.jsx';
+export { default as ExamManagementPage } from './ExamManagement/ExamManagement.jsx';
 export { default as NotFound } from './NotFound/NotFound.jsx';

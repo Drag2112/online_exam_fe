@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { AdminContext } from '../../../context/AdminProvider';
 import { Modal } from 'react-bootstrap';
-import { Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import {API} from '../../../api/api';
 import { toast } from 'react-toastify'; 
 import { initToast } from '../../../utils/helper';
@@ -70,13 +70,15 @@ const DeleteUserPopup = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <div>
-                    <div className='mb-3'>Bạn chắc chắn muốn {user?.is_locked === 0 ? 'khoá tài khoản' : 'mở khóa tài khoản'} của user <strong>{user?.user_name || ''}</strong> chứ?</div>
-                    <div className='d-flex flex-row-reverse'>
-                        <Button variant='contained' className='delete-user-popup-cancel-button' onClick={handleClosePopup}>Hủy</Button>
-                        <Button variant='contained' className='delete-user-popup-confirm-button' onClick={handleClickConfirmButton}>Đồng ý</Button>
-                    </div>
+                    Bạn chắc chắn muốn {user?.is_locked === 0 ? 'khoá tài khoản' : 'mở khóa tài khoản'} của user <strong>{user?.user_name || ''}</strong> chứ?
                 </div>
             </Modal.Body>
+            <Modal.Footer>
+                <Stack direction='row' spacing={1} marginTop={1}>
+                    <Button variant='outlined' classes={{root: 'mui-cancel-button-root'}} onClick={handleClosePopup}>Hủy</Button>
+                    <Button variant='contained' onClick={handleClickConfirmButton}>Đồng ý</Button>
+                </Stack>
+            </Modal.Footer>
         </Modal>
     )
 }

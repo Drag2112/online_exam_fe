@@ -72,10 +72,15 @@ export const useSetQueryParams = () => {
 
     return function setQueryParams(prefixRouter="", newParams={}, options) {
         const mergeParams = options && options.merge ? {
-                ...currentParam,
-                ...newParams,
-            } : newParams;
+            ...currentParam,
+            ...newParams,
+        } : newParams;
         
-        navigate(`${prefixRouter}?${stringifyQueryString(mergeParams)}`)
+        const redirectUrl = `${prefixRouter}?${stringifyQueryString(mergeParams)}`
+        if (options && options.openNewTab === true) {
+            window.open(redirectUrl)
+        } else {
+            navigate(redirectUrl)
+        }
     }
 }

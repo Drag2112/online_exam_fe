@@ -159,7 +159,7 @@ const EditUserPopup = (props) => {
                                 </Select>
                             </FormControl>
                         </div>
-                        <div className='d-flex flex-row add-new-user-popup-body-text-field'>
+                        <div className='d-flex flex-row justify-content-between add-new-user-popup-body-text-field'>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoContainer components={['DatePicker']} >
                                     <DemoItem>
@@ -170,11 +170,15 @@ const EditUserPopup = (props) => {
                                     </DemoItem>
                                 </DemoContainer>
                             </LocalizationProvider>
-                            <RadioGroup row value={userInfor.gender} onChange={(event) => handleChangeUserInfor('gender', event.target.value)}
-                            >
-                                <FormControlLabel control={<Radio />} labelPlacement='start' label='Nam' value='male' />
-                                <FormControlLabel control={<Radio />} labelPlacement='start' label='Nữ' value='female' />
-                            </RadioGroup>
+                            <FormControl fullWidth className='add-user-popup-form-control'>
+                                <InputLabel id="demo-simple-select-label">Giới tính</InputLabel>
+                                <Select label='Giới tính' value={userInfor.gender} onChange={(event) => handleChangeUserInfor('gender', event.target.value)}
+                                >
+                                    <MenuItem value='male'>Nam</MenuItem>
+                                    <MenuItem value='female'>Nữ</MenuItem>
+                                    <MenuItem value='other'>Khác</MenuItem>
+                                </Select>
+                            </FormControl>
                         </div>
                         <div className='add-new-user-popup-body-text-field'>
                             <TextField  variant="outlined" label='Email' placeholder='Nhập email' fullWidth 

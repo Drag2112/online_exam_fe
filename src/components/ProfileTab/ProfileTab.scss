@@ -1,0 +1,34 @@
+$profile-item-user-infor: 400px;
+
+.profile-tab-button-root {
+    height: 28px !important;
+}
+
+.profile-tab-user-avatar-row {
+    padding: 24px 64px 0 64px !important;
+}
+
+.profile-tab-user-infor-row {
+    padding: 0 64px !important;
+}
+
+.profile-tab-text-field-root {
+    max-width: $profile-item-user-infor;
+}
+
+.profile-tab-date-picker {
+    max-width: $profile-item-user-infor;
+    width: $profile-item-user-infor;
+}
+
+.profile-tab-text-field-with-dp {
+    margin-top: 8px !important;
+}
+
+.profile-tab-button-row {
+    padding: 16px 64px !important;
+}
+
+.profile-tab-form-control {
+    max-width: $profile-item-user-infor;
+}

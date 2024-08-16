@@ -12,8 +12,10 @@ import { IconButton } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import HttpsIcon from '@mui/icons-material/Https';
+import PersonIcon from '@mui/icons-material/Person';
 import NoEncryptionGmailerrorredIcon from '@mui/icons-material/NoEncryptionGmailerrorred';
 import { useState, useContext, useEffect } from 'react';
+import { useSetQueryParams } from '../../../hook';
 import { AdminContext } from '../../../context/AdminProvider';
 import EditUserPopup from '../EditUserPopup/EditUserPopup';
 import ResetPasswordPopup from '../ResetPasswordPopup/ResetPasswordPopup';
@@ -22,8 +24,8 @@ import {API} from '../../../api/api';
 import { toast } from 'react-toastify'; 
 import { initToast, formatPhoneNumber } from '../../../utils/helper';
 import { ToastId } from '../../../config/app.config';
+import { QUERY_PARAM_KEY, ROUTE_PATH } from '../../../config/routes.config';
 import './UserTable.scss';
-
 
 const UserTable = (props) => {
     const { valueSearch, submit, setSubmit } = props
@@ -33,6 +35,8 @@ const UserTable = (props) => {
     const [dataRows, setDataRows] = useState([])
     const [totalData, setTotalData] = useState(0)
     const [userAction, setUserAction] = useState(null)
+
+    const setQueryParams = useSetQueryParams()
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage)
@@ -58,6 +62,14 @@ const UserTable = (props) => {
     const handleOpenLockOrUnLockPopup = (userInfor) => {
         setUserAction(userInfor)
         context.setOpenLockAndUnLockUserPopup(true)
+    }
+
+    const handleClickViewDetail = (userInfor) => {
+        const options = { openNewTab: true }
+        const queryParams = {
+            [QUERY_PARAM_KEY.PROFILE_ID]: userInfor?.user_id || 0
+        }
+        setQueryParams(ROUTE_PATH.PROFILE, queryParams, options)
     }
     
     useEffect(() => {
@@ -118,14 +130,18 @@ const UserTable = (props) => {
                         <TableBody>
                         {dataRows.map((row, index) => (
                             <TableRow>
-                                <TableCell align='center'>{index + 1}</TableCell>
-                                <TableCell align='left'>{row.user_name}</TableCell>
-                                <TableCell align='left'>{row.full_name}</TableCell>
-                                <TableCell align='left'>{row.role_name}</TableCell>
-                                <TableCell align='left'>{row.date_of_birth}</TableCell>
-                                <TableCell align='left'>{row.email}</TableCell>
-                                <TableCell align='left'>{formatPhoneNumber(row.phone_number)}</TableCell> 
-                                <TableCell align='left'>{row.is_locked === 0 ? 'Đang hoạt động' : 'Đã khóa'}</TableCell> 
+                                <TableCell align='center' sx={{cursor: 'pointer'}}>{index + 1}</TableCell>
+                                <TableCell align='left' sx={{cursor: 'pointer'}} onClick={() => handleClickViewDetail(row)}>{row.user_name}</TableCell>
+                                <TableCell align='left' sx={{cursor: 'pointer'}} onClick={() => handleClickViewDetail(row)}>{row.full_name}</TableCell>
+                                <TableCell align='left' sx={{cursor: 'pointer'}} onClick={() => handleClickViewDetail(row)}>{row.role_name}</TableCell>
+                                <TableCell align='left' sx={{cursor: 'pointer'}} onClick={() => handleClickViewDetail(row)}>{row.date_of_birth}</TableCell>
+                                <TableCell align='left' sx={{cursor: 'pointer'}} onClick={() => handleClickViewDetail(row)}>{row.email}</TableCell>
+                                <TableCell align='left' sx={{cursor: 'pointer'}} onClick={() => handleClickViewDetail(row)}>
+                                    {formatPhoneNumber(row.phone_number)}
+                                </TableCell> 
+                                <TableCell align='left' sx={{cursor: 'pointer'}} onClick={() => handleClickViewDetail(row)}>
+                                    {row.is_locked === 0 ? 'Đang hoạt động' : 'Đã khóa'}
+                                </TableCell> 
                                 <TableCell align='center'>
                                     <Stack direction='row' justifyContent='center'>
                                         <Tooltip title='Thay đổi thông tin user'>

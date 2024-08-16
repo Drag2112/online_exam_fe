@@ -1,3 +1,4 @@
+import './LoginForm.scss';
 import Modal from 'react-bootstrap/Modal';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -12,7 +13,6 @@ import { ToastId } from '../../config/app.config';
 import { initToast } from '../../utils/helper';
 import { API } from '../../api/api';
 import { toast } from 'react-toastify';
-import './LoginForm.scss';
 
 
 const LoginForm = () => {
@@ -76,22 +76,23 @@ const LoginForm = () => {
                         localStorage.setItem(LOCAL_STORAGE_KEY.USER_ID, decodedResult?.userId?.toString())
                         localStorage.setItem(LOCAL_STORAGE_KEY.USER_NAME, decodedResult?.userName?.toString())
                         localStorage.setItem(LOCAL_STORAGE_KEY.FULL_NAME, decodedResult?.fullName?.toString())
+                        localStorage.setItem(LOCAL_STORAGE_KEY.EMAIL, decodedResult?.email?.toString())
                         localStorage.setItem(LOCAL_STORAGE_KEY.FUNCTION_CODES, decodedResult?.functionCodes?.join(';'))
                         localStorage.setItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN, accessToken)
-                        
+
                         navigate(ROUTE_PATH.DASHBOARD)
                         toast.update(ToastId.Login, { 
                             render: 'Đăng nhập thành công', 
                             type: 'success', 
                             isLoading: false, 
-                            autoClose: 2000 
+                            autoClose: 2000,
                         })
                     } else {
                         toast.update(ToastId.Login, { 
                             render: resultApi.data.message || 'Đăng nhập thất bại', 
                             type: 'error', 
                             isLoading: false, 
-                            autoClose: 3000 
+                            autoClose: 2000 
                         })
                     }
                 } catch (err) {

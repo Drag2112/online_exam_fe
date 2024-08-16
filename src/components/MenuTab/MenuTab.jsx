@@ -5,19 +5,18 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { StyledEngineProvider } from '@mui/material/styles';
-import { ROUTE_PATH, menu } from '../../config/routes.config';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH, routes } from '../../config/routes.config';
 import { LOCAL_STORAGE_KEY } from '../../config/memory.config';
+import { AppContext } from '../../context/AppProvider';
 import './MenuTab.scss';
 
-const drawerWidth = 240;
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' }) (
     ({ theme, open }) => ({
         '& .MuiDrawer-paper': {
             position: 'relative',
             whiteSpace: 'nowrap',
-            width: drawerWidth,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
@@ -35,34 +34,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                 },
             }),
             background: 'white',
-            color: '#3c3c3c'
+            color: '#3c3c3c',
+            borderRight: 0
         },
     }),
 );
 
 const MenuTab = () => {
-    const userId = localStorage.getItem(LOCAL_STORAGE_KEY.USER_ID)
-    const functionCodes = localStorage.getItem(LOCAL_STORAGE_KEY.FUNCTION_CODES)?.split(';') || []
+    const appContext = useContext(AppContext)
 
-    const [open, setOpen] = useState(true)
-
-    // handle open sub menu
-    const routeKeys = menu.map(route => route.key)
-    const subMenuStateInit = {}
-    routeKeys.map(key => {
-        subMenuStateInit[key] = false
-    })   
-    const menusOpen = localStorage.getItem(LOCAL_STORAGE_KEY.OPEN_SUB_MENU_KEYS)
-    if (menusOpen && menusOpen.split(',').length > 0) {
-        menusOpen.split(',').map(key => {
-            subMenuStateInit[key] = true
-        })
-    }
-    const [subMenuState, setSubMenuState] = useState(subMenuStateInit)
-    
     // handle tab color of menu tabs
     const tabs = []
-    menu.map(route => {
+    routes.map(route => {
         tabs.push({
             key: route.key,
             path: route.path
@@ -91,7 +74,7 @@ const MenuTab = () => {
             }           
         } else {
             tabClickStateInit[tab.key] = false
-        }      
+        }
     })
 
     const [tabKeyState, setTabKeyState] = useState(tabClickStateInit)
@@ -105,115 +88,101 @@ const MenuTab = () => {
             if (menus && menus.split(',').length > 0) {
                 newMenus = menus.split(',')                
             }
-            if (!subMenuState[route.key]) {            
+            if (!newMenus.includes(route.key)) {            
                 newMenus.push(route.key)
             } else {
-                if (tabKeyState[route.key]) {
-                    newMenus = newMenus.filter(value => value !== route.key)
-                }        
+                newMenus = newMenus.filter(value => value !== route.key)
             }
             localStorage.setItem(LOCAL_STORAGE_KEY.OPEN_SUB_MENU_KEYS, newMenus.join(','))
-            navigate(route.subRoutes[0].path + `?key=${route.subRoutes[0].key}`)
-
-            if (tabKeyState[route.key]) {
-                handleSetSubMenuState(route)
-            }
         } else {
             if (route.path === ROUTE_PATH.LOGIN) {
-                localStorage.clear()
+                localStorage.clear()    // Logout
             }
+
             navigate(route.path)
         }
         handleSetTabKeyState(route)
     }
 
     const handleClickSubMenu = (subRoute) => {     
-        navigate(subRoute.path + `?key=${subRoute.key}`)
+        navigate(subRoute.path)
         handleSetTabKeyState(subRoute)
     }
 
-    const handleSetSubMenuState = (route) => {
-        const newSubMenuState = {}
-        Object.keys(subMenuState).map(key => {
-            if (route.key === key) {
-                newSubMenuState[key] = !subMenuState[key]
-            } else {
-                newSubMenuState[key] = subMenuState[key]
-            }
-        })
-        setSubMenuState(newSubMenuState)
-    }
-
+    // set color state when click tab and sub tab
     const handleSetTabKeyState = (routeClicked) => {
         const newKeyState = {}
         Object.keys(tabKeyState).map(key => {
-            if (String(routeClicked.key || '').includes(key) || key.includes(routeClicked.key)) {
+            if (routeClicked.key === key) {
                 newKeyState[key] = true
             } else {
-                newKeyState[key] = false
+                if (key.includes(routeClicked.key)) {
+                    newKeyState[key] = tabKeyState[key]
+                } else if (routeClicked.key.includes(key)) {
+                    newKeyState[key] = true
+                } else {
+                    newKeyState[key] = false
+                }
             }
         })
-
-        if (routeClicked.subRoutes && Array.isArray(routeClicked.subRoutes) && routeClicked.subRoutes.length > 0) {
-            newKeyState[routeClicked.subRoutes[0].key] = true
-        }
         setTabKeyState(newKeyState)
     }
 
     return (
-        <StyledEngineProvider injectFirst>
-            <Drawer variant="permanent" open={open}>
-                <List component="nav" sx={{marginTop: '15px'}}>
-                    {menu.map(route => {
-                        return (
-                            <>
-                                <ListItemButton
-                                    sx={{
-                                        margin: '0 15px', 
-                                        borderRadius: '5px', 
-                                        display: route.functionCode ? (userId && functionCodes.includes(route.functionCode) ? 'flex' : 'none') : 'flex'
-                                    }}
-                                    className={tabKeyState[route.key] && 'menutab-tab-item-btn-click'} 
-                                    onClick={() => handleClickMenu(route)}
-                                >
-                                    <ListItemIcon 
-                                        sx={{minWidth: '40px', color: tabKeyState[route.key] ? '#ffffff' : '#3c3c3c', marginLeft: '5px'}}
+        <div className='menu-tab-container'>
+            <StyledEngineProvider injectFirst>
+                <Drawer variant="permanent" open={true}>
+                    <List component="nav" sx={{marginTop: '15px'}}>
+                        {routes.map(route => {
+                            return (
+                                <>
+                                    <ListItemButton
+                                        sx={{
+                                            margin: '0 15px', 
+                                            borderRadius: '5px',
+                                        }}
+                                        className={tabKeyState[route.key] && 'menutab-tab-item-btn-click'} 
+                                        onClick={() => handleClickMenu(route)}
                                     >
-                                        {route.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={route.name} sx={{display: !open && 'none'}}/>
-                                    {route.subRoutes.length > 0 && open && (
-                                        <>{subMenuState[route.key] ? <ExpandLess /> : <ExpandMore />}</>
-                                    )}
-                                </ListItemButton>
-                                {route.subRoutes.length > 0 && (
-                                    <Collapse in={subMenuState[route.key]} timeout="auto" unmountOnExit>
-                                        <List component="div" disablePadding>
-                                            {route.subRoutes.map(subRoute => {
-                                                return (
-                                                    <ListItemButton
-                                                        sx={{margin: '0 15px', borderRadius: '5px'}}
-                                                        className={tabKeyState[subRoute.key] && 'menutab-subtab-item-btn-click'} 
-                                                        onClick={() => handleClickSubMenu(subRoute)}
-                                                    >
-                                                        <ListItemIcon 
-                                                            sx={{marginLeft: '20px', minWidth: '35px', color: tabKeyState[subRoute.key] ? '#3678cf' : '#3c3c3c'}}
+                                        <ListItemIcon 
+                                            sx={{minWidth: '30px', color: tabKeyState[route.key] ? '#ffffff' : '#3c3c3c'}}
+                                        >
+                                            {route.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={route.name} classes={{primary: 'menu-tab-list-item-text-primary'}} />
+                                        {route.subRoutes.length > 0 && (
+                                            <>{localStorage.getItem(LOCAL_STORAGE_KEY.OPEN_SUB_MENU_KEYS)?.includes(route.key) ? <ExpandLess /> : <ExpandMore />}</>
+                                        )}
+                                    </ListItemButton>
+                                    {route.subRoutes.length > 0 && (
+                                        <Collapse in={localStorage.getItem(LOCAL_STORAGE_KEY.OPEN_SUB_MENU_KEYS)?.includes(route.key)} timeout="auto" unmountOnExit>
+                                            <List component="div" disablePadding>
+                                                {route.subRoutes.map(subRoute => {
+                                                    return (
+                                                        <ListItemButton
+                                                            sx={{margin: '0 15px', borderRadius: '5px'}}
+                                                            className={tabKeyState[subRoute.key] && 'menutab-subtab-item-btn-click'} 
+                                                            onClick={() => handleClickSubMenu(subRoute)}
                                                         >
-                                                            {subRoute.icon}
-                                                        </ListItemIcon>
-                                                        <ListItemText primary={subRoute.name} />
-                                                    </ListItemButton>
-                                                )
-                                            })}    
-                                        </List>
-                                    </Collapse>
-                                )}
-                            </>
-                        )
-                    })}
-                </List>
-            </Drawer>
-        </StyledEngineProvider>
+                                                            <ListItemIcon 
+                                                                sx={{marginLeft: '15px', minWidth: '25px', color: tabKeyState[subRoute.key] ? '#3678cf' : '#3c3c3c'}}
+                                                            >
+                                                                {subRoute.icon}
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={subRoute.name} classes={{primary: 'menu-tab-list-item-text-primary'}}/>
+                                                        </ListItemButton>
+                                                    )
+                                                })}    
+                                            </List>
+                                        </Collapse>
+                                    )}
+                                </>
+                            )
+                        })}
+                    </List>
+                </Drawer>
+            </StyledEngineProvider>
+        </div>
     )
 }
 

@@ -1,9 +1,9 @@
-import { Header, MenuTab, DashboardTab, Footer, AboutUs } from '../../components';
+import './StudenLearningResult.scss'
+import { Header, MenuTab, Footer, AboutUs } from '../../components';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from 'react';
-import './Dashboard.scss';
 
-const Dashboard = () => {
+const StudenLearningResult = () => {
     const [showAboutUs, setShowAboutUs] = useState(false)
 
     return (
@@ -16,7 +16,7 @@ const Dashboard = () => {
                     <MenuTab />
                 </div>
                 <div class='layout-main-component'>
-                    <DashboardTab />
+                    
                 </div>
                 <div className='about-us-container' onClick={() => setShowAboutUs(true)}>
                     <InfoOutlinedIcon sx={{ color: '#074E9F' }} />
@@ -31,4 +31,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard;
+export default StudenLearningResult

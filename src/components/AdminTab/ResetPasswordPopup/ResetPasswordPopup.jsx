@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { AdminContext } from '../../../context/AdminProvider';
 import { Modal } from 'react-bootstrap';
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, Stack } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { InputAdornment, OutlinedInput } from '@mui/material';
@@ -84,8 +84,8 @@ const ResetPasswordPopup = (props) => {
                 <Modal.Title className='reset-password-popup-title'>Xác nhận</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div>
-                    <div className='mb-3'>Reset password của user <strong>{user?.user_name || ''}</strong> về password:</div>
+                <Stack direction='column' spacing={2}>
+                    <div>Reset password của user <strong>{user?.user_name || ''}</strong> về password:</div>
                     <FormControl variant="outlined" fullWidth>
                         <InputLabel htmlFor="outlined-adornment-password">Mật khẩu reset</InputLabel>
                         <OutlinedInput type={showPassword ? 'text' : 'password'}
@@ -107,12 +107,14 @@ const ResetPasswordPopup = (props) => {
                             onChange={handleChangePassword}                                
                         />
                     </FormControl>
-                    <div className='d-flex flex-row-reverse mt-4'>
-                        <Button variant='contained' className='reset-password-popup-cancel-button' onClick={handleClosePopup}>Hủy</Button>
-                        <Button variant='contained' className='reset-password-popup-confirm-button' onClick={handleClickConfirmButton}>Đồng ý</Button>
-                    </div>
-                </div>
+                </Stack>
             </Modal.Body>
+            <Modal.Footer>
+                <Stack direction='row' spacing={1} marginTop={1}>
+                    <Button variant='outlined' classes={{root: 'mui-cancel-button-root'}} onClick={handleClosePopup}>Hủy</Button>
+                    <Button variant='contained' onClick={handleClickConfirmButton}>Đồng ý</Button>
+                </Stack>
+            </Modal.Footer>
         </Modal>
     )
 }

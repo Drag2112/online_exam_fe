@@ -1,7 +1,7 @@
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ClassIcon from '@mui/icons-material/Class';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import LogoutIcon from '@mui/icons-material/Logout';
+import QuizIcon from '@mui/icons-material/Quiz';
 import { FUNCTION_CODE } from './authorization.config';
 
 export const ROUTE_KEY = {
@@ -9,6 +9,7 @@ export const ROUTE_KEY = {
     DASHBOARD: 'r1',
     CLASS: 'r2',
     ADMIN: 'r3',
+    EXAM_MANAGEMENT: 'r4'
 }
 
 export const ROUTE_PATH = {
@@ -19,14 +20,18 @@ export const ROUTE_PATH = {
     CLASS_EXAM: '/class/exam',
     CLASS_EXAM_ROOM: '/class/exam/room',
     ADMIN: '/admin',
+    PROFILE: '/profile',
+    LEARNING_RESULT: '/learning-result',
+    LEARNING_RESULT_DETAIL: '/learning-result/detail',
+    EXAM_MANAGEMENT: '/exam-management',
     NOT_FOUND: '*'
 }
 
-export const menu = [
+export const routes = [
     { key: ROUTE_KEY.DASHBOARD, path: ROUTE_PATH.DASHBOARD, name: 'Dashboard', icon: <DashboardIcon />, functionCode: FUNCTION_CODE.VIEW_DASHBOARD_TAB, subRoutes: [], },
     { key: ROUTE_KEY.CLASS, path: ROUTE_PATH.CLASS, name: 'Danh sách lớp học', icon: <ClassIcon />, functionCode: FUNCTION_CODE.VIEW_CLASS_TAB, subRoutes: [], },
-    { key: ROUTE_KEY.ADMIN, path: ROUTE_PATH.ADMIN, name: 'Quản trị', icon: <AdminPanelSettingsIcon />, functionCode: FUNCTION_CODE.VIEW_ADMIN_TAB, subRoutes: [], },
-    { key: ROUTE_KEY.LOGIN, path: ROUTE_PATH.LOGIN, name: 'Đăng xuất', icon: <LogoutIcon />, subRoutes: [], },
+    { key: ROUTE_KEY.EXAM_MANAGEMENT, path: ROUTE_PATH.EXAM_MANAGEMENT, name: 'Quản lý đề thi', icon: <QuizIcon />, functionCode: FUNCTION_CODE.VIEW_ADMIN_TAB, subRoutes: [], },
+    { key: ROUTE_KEY.ADMIN, path: ROUTE_PATH.ADMIN, name: 'Quản lý người dùng', icon: <AdminPanelSettingsIcon />, functionCode: FUNCTION_CODE.VIEW_ADMIN_TAB, subRoutes: [], },
 ]
 
 export const QUERY_PARAM_KEY = {
@@ -36,4 +41,5 @@ export const QUERY_PARAM_KEY = {
     EXAM_NAME: 'exam_name',
     EXAM_TIME: 'exam_time',
     EXAM_ACTION_TYPE: 'exam_action_type',
+    PROFILE_ID: 'profile_id'
 }

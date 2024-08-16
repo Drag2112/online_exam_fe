@@ -14,8 +14,8 @@ const AboutUs = (props) => {
                 <div className='d-flex flex-row align-items-center aboutus-body-container'>
                     <img src={logoHeader} alt="logo" className='aboutus-body-container-1-img'/>
                     <div className='d-flex flex-column '>
-                        <div className='aboutus-body-container-1-title-name'>Nhóm 09</div>
-                        <div className='aboutus-body-container-1-title-name'>Nguyễn Hải Long - Nguyễn Ngọc Huy</div>
+                        <div className='aboutus-body-container-1-title-name'>Đồ án tốt nghiệp</div>
+                        <div className='aboutus-body-container-1-title-name'>Sinh viên: Nguyễn Hải Long</div>
                     </div>
                 </div>
                 <div className='aboutus-body-container'>
@@ -31,10 +31,6 @@ const AboutUs = (props) => {
                         <tr>
                             <td className='aboutus-body-container-table-c1'>Hỗ trợ:</td>
                             <td className='aboutus-body-container-table-row-value'>longqtubqn@gmail.com</td>
-                        </tr>
-                        <tr>
-                            <td className='aboutus-body-container-table-c1'></td>
-                            <td className='aboutus-body-container-table-row-value'>huy315674@gmail.com</td>
                         </tr>
                     </table>
                 </div>

@@ -66,7 +66,6 @@ const DashboardTab = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='dashboard-tab-margin-bottom'></div>
                 </div> :
                 <AccessDenied />
             }

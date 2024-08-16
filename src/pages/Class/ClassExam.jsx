@@ -1,5 +1,3 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Box } from '@mui/material';
 import { Header, MenuTab, ClassExamTab, Footer, AboutUs } from '../../components';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { ClassProvider } from '../../context/ClassProvider';
@@ -10,27 +8,29 @@ const ClassExam = () => {
     const [showAboutUs, setShowAboutUs] = useState(false)
 
     return (
-        <ThemeProvider theme={createTheme()}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'auto' }}>
+        <div class='layout-container'>
+            <header>
                 <Header />
-                <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
+            </header>
+            <div class='layout-content'>
+                <div class='layout-menu-tab'>
                     <MenuTab />
-                    <Box component="main" sx={{ backgroundColor: '#f1f1f1', flexGrow: 1 }}>
-                        <ClassProvider>
-                            <ClassExamTab />
-                        </ClassProvider>
-                    </Box>
-                </Box>
-                <div>
-                    <div className='about-us-container' onClick={() => setShowAboutUs(true)}>
-                        <InfoOutlinedIcon sx={{color: '#074E9F'}}/>
-                        <span className='about-us-title'>Về chúng tôi</span>
-                    </div>
                 </div>
+                <div class='layout-main-component'>
+                    <ClassProvider>
+                        <ClassExamTab />
+                    </ClassProvider>
+                </div>
+                <div className='about-us-container' onClick={() => setShowAboutUs(true)}>
+                    <InfoOutlinedIcon sx={{ color: '#074E9F' }} />
+                    <span className='about-us-title'>Về chúng tôi</span>
+                </div>
+            </div>
+            <footer>
                 <Footer />
-            </Box>
-            <AboutUs showAboutUs={showAboutUs} setShowAboutUs={setShowAboutUs}/>
-        </ThemeProvider>
+            </footer>
+            <AboutUs showAboutUs={showAboutUs} setShowAboutUs={setShowAboutUs} />
+        </div>
     )
 }
 
