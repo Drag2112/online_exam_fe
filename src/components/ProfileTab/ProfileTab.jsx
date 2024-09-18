@@ -1,25 +1,66 @@
 import './ProfileTab.scss'
 import { Avatar, Button, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ChangePasswordPopup from './ChangePasswordPopup/ChangePasswordPopup';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useQueryParams } from '../../hook';
+import {API} from '../../api/api';
+import { ToastId } from '../../config/app.config';
+import { toast } from 'react-toastify'; 
+import { initToast } from '../../utils/helper';
 
 
 const ProfileTab = () => {
-    const user = {
-        userName: 'admin',
-        fullName: 'Quản trị hệ thống',
-        userId: 1,
-        roleName: 'ADMIN'
-    }
+    const queryParams = useQueryParams()
+    const profileId = Number(queryParams?.profile_id || 0)
+
+    const [user, setUser] = useState({
+        userId: profileId,
+        userName: '',
+        fullName: '',
+        roleName: ''
+    })
 
     const [showPopupChangePassword, setShowPopupChangePassword] = useState(false);
     
     const handleShowPopupChangePassword = () => setShowPopupChangePassword(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            initToast(ToastId.Profile)
+            try {
+                const resultApi = await API.userService.getUserByProfileId(profileId)
+                if (resultApi && resultApi.data && resultApi.data.data) {
+                    const userInfor = resultApi.data.data
+                    setUser({
+                        userId: userInfor.user_id || 0,
+                        userName: userInfor.user_name || '',
+                        fullName: userInfor.full_name || '',
+                        roleName: userInfor.role_name || ''
+                    })
+                    toast.update(ToastId.Profile, { 
+                        render: "Tải dữ liệu thành công", 
+                        type: "success", 
+                        isLoading: false, 
+                        autoClose: 2000 
+                    })
+                }
+            } catch (err) {
+                toast.update(ToastId.Profile, { 
+                    render: err.response.data.message || "Tải dữ liệu thất bại", 
+                    type: "error", 
+                    isLoading: false, 
+                    autoClose: 3000 
+                })
+            }
+        }
+
+        fetchData()
+    }, [profileId])
 
     return (
         <div className='tab-container'>

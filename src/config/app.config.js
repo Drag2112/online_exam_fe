@@ -40,7 +40,8 @@ export const ToastId = {
     UpdateUserId: 'update-user-id',
     SearchUser: 'search-user-id',
     LockUser: 'lock-user-id',
-    ResetPassword: 'reset-password-id'
+    ResetPassword: 'reset-password-id',
+    Profile: 'profile-id'
 }
 
 export const ExamRoomActionType = {

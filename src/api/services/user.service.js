@@ -37,6 +37,16 @@ class userService {
         return result
     }
 
+    getUserByProfileId = async (profileId) => {
+        this.setAuthorizationHeader()
+        const result = await this.#_baseApi.get('user', {
+            params: {
+                profileId: profileId
+            }
+        })
+        return result
+    }
+
     lockUser = async (payload) => {
         this.setAuthorizationHeader()
         const result = await this.#_baseApi.post('/user/lock', {

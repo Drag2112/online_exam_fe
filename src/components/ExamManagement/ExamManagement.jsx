@@ -38,7 +38,7 @@ const ExamManagement = () => {
         <div className='tab-container'>
             <Stack direction='row' justifyContent='space-between' >
                 <Typography sx={{fontSize: '20px', fontWeight: 600, color: '#376fd0'}}>Quản lý đề thi</Typography>
-                <Button variant='contained'>Tạo đề thi</Button>
+                <Button variant='contained' sx={{backgroundColor: '#376fd0'}}>Tạo đề thi</Button>
             </Stack>
             <Stack direction='row' spacing={2} marginTop={2} marginBottom={3}>
                 <FormControl fullWidth classes={{root: 'exam-management-filter-dropdown-root'}}>
