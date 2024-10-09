@@ -41,7 +41,8 @@ export const ToastId = {
     SearchUser: 'search-user-id',
     LockUser: 'lock-user-id',
     ResetPassword: 'reset-password-id',
-    Profile: 'profile-id'
+    Profile: 'profile-id',
+    ChangePassword: 'change-password-id'
 }
 
 export const ExamRoomActionType = {

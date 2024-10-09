@@ -7,15 +7,15 @@ const StudenLearningResult = () => {
     const [showAboutUs, setShowAboutUs] = useState(false)
 
     return (
-        <div class='layout-container'>
+        <div className='layout-container'>
             <header>
                 <Header />
             </header>
-            <div class='layout-content'>
-                <div class='layout-menu-tab'>
+            <div className='layout-content'>
+                <div className='layout-menu-tab'>
                     <MenuTab />
                 </div>
-                <div class='layout-main-component'>
+                <div className='layout-main-component'>
                     
                 </div>
                 <div className='about-us-container' onClick={() => setShowAboutUs(true)}>

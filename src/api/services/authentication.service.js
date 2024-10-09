@@ -45,6 +45,16 @@ class authenticationService {
         })
         return result
     }
+
+    changePassword = async (data) => {
+        this.setAuthorizationHeader()
+        const result = await this.#_baseApi.post('/auth/change-password', {
+            username: data.username || '',
+            password: data.password || '',
+            newPassword: data.newPassword || ''
+        })
+        return result
+    }
 }
 
 export default authenticationService;
