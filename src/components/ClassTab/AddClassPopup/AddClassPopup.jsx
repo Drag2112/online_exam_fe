@@ -12,7 +12,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ClassContext } from '../../../context/ClassProvider';
 import { toast } from 'react-toastify'; 
 import { initToast } from '../../../utils/helper';
-import { ToastId } from '../../../config/app.config';
+import { MenuSelectSize, ToastId } from '../../../config/app.config';
 import {API} from '../../../api/api';
 import './AddClassPopup.scss'
 
@@ -33,17 +33,15 @@ const modalStyle = {
 const AddClassPopup = (props) => {
     const { setRefreshDataTable } = props
     const [teachers, setTeachers] = useState([])
+    const [subjects, setSubjects] = useState([])
     const [classBody, setClassBody] = useState({
         classCode: '',
         className: '',
-        teacherId: '',
+        subjectId: null,
+        teacherId: null,
         description: ''
     })
     const [submit, setSubmit] = useState(false)
-
-    const handleChangeTeacher = (event) => {
-        setClassBody(prev => ({...prev, teacherId: event.target.value}))
-    }
 
     const handleChangeValueClass = (paramName, value) => {
         setClassBody(prev => ({...prev, [paramName]: value}))
@@ -58,9 +56,14 @@ const AddClassPopup = (props) => {
 
     useEffect(() => {
         const fetchMasterData = async () => {
-            const resultApi = await API.userService.getAllTeachers()
-            if (resultApi && resultApi.data && resultApi.data.data) {
-                setTeachers(resultApi.data.data)
+            const resultApi1 = await API.userService.getAllTeachers()
+            if (resultApi1 && resultApi1.data && resultApi1.data.data) {
+                setTeachers(resultApi1.data.data)
+            }
+
+            const resultApi2 = await API.classService.getMasterDataSubjects()
+            if (resultApi2 && resultApi2.data && resultApi2.data.data) {
+                setSubjects(resultApi2.data.data)
             }
         }
         fetchMasterData()
@@ -129,8 +132,38 @@ const AddClassPopup = (props) => {
                         </div>
                         <div className='add-new-class-popup-body-text-field'>
                             <FormControl fullWidth>
+                                <InputLabel>Chọn môn học</InputLabel>
+                                <Select value={classBody.subjectId} label='Chọn môn học' 
+                                    onChange={(event) => handleChangeValueClass('subjectId', event.target.value)}
+                                    MenuProps={{
+                                        PaperProps: {
+                                            style: {
+                                              maxHeight: MenuSelectSize.ITEM_HEIGHT * 4.5 + MenuSelectSize.ITEM_PADDING_TOP,
+                                            },
+                                        },
+                                    }}
+                                >
+                                {subjects.map(subject => (
+                                    <MenuItem value={subject.subjectId}>
+                                        {subject.subjectName}
+                                    </MenuItem>
+                                ))} 
+                                </Select>
+                            </FormControl>
+                        </div>
+                        <div className='add-new-class-popup-body-text-field'>
+                            <FormControl fullWidth>
                                 <InputLabel>Giáo viên phụ trách</InputLabel>
-                                <Select label='Giáo viên phụ trách' value={classBody.teacherId} onChange={handleChangeTeacher}>
+                                <Select label='Giáo viên phụ trách' value={classBody.teacherId} 
+                                    onChange={(event) => handleChangeValueClass('teacherId', event.target.value)}
+                                    MenuProps={{
+                                        PaperProps: {
+                                            style: {
+                                              maxHeight: MenuSelectSize.ITEM_HEIGHT * 4.5 + MenuSelectSize.ITEM_PADDING_TOP,
+                                            },
+                                        },
+                                    }}
+                                >
                                     {teachers.map(teacher => (
                                         <MenuItem value={teacher.user_id}>{`${teacher.full_name} (${teacher.user_name})`}</MenuItem>
                                     ))}

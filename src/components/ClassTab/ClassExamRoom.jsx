@@ -232,7 +232,7 @@ const ClassExamRoom = () => {
                 <Box sx={{border: '1px solid #1976d2', borderRadius: '6px', padding: '15px', marginBottom: 4, overflow: 'auto', maxHeight: '560px'}}>
                     {context.questions.map((question) => (
                         <QuestionItemRoom actionType={queryParams[QUERY_PARAM_KEY.EXAM_ACTION_TYPE]} questionNumber={question.questionNumber} questionType={question.questionType}
-                            questionContent={question.questionContent} results={question.results} 
+                            questionContent={question.questionContent} results={question.results} testcases={question.testcases}
                         />
                     ))}
                 </Box>

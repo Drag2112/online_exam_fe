@@ -19,6 +19,7 @@ class classService {
             teacherId: payload.teacherId, 
             classCode: payload.classCode, 
             className: payload.className, 
+            subjectId: payload.subjectId,
             description: payload.description
         })
         return result
@@ -163,6 +164,12 @@ class classService {
         const result = await this.#_baseApi.post('/class/exam/submit-result', {
             examId, startTime, endTime, questionResults
         })
+        return result
+    }
+
+    getMasterDataSubjects = async () => {
+        this.setAuthorizationHeader()
+        const result = await this.#_baseApi.get('/class/all-subjects')
         return result
     }
 }

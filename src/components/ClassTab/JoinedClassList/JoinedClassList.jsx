@@ -29,8 +29,11 @@ const JoinedClassList = (props) => {
                         <Paper elevation={2}>
                             <Card sx={{ minWidth: 275 }}>
                                 <CardContent sx={{borderBottom: '1px solid #e0e0e0', backgroundColor: '#e3ecf9'}}>
-                                    <Typography gutterBottom classes={{root: 'joined-class-typography-root'}}>{`${row.class_name} - ${row.class_code}`}</Typography>
+                                    <Typography gutterBottom classes={{root: 'joined-class-typography-root'}} sx={{fontWeight: 600}}>
+                                        Lớp: {`${row.class_name}`} (Mã lớp: {`${row.class_code}`})
+                                    </Typography>
                                     <Chip label={row.status} sx={{marginBottom: 3, borderRadius: '6px', height: '20px', backgroundColor: '#376fd0', color: 'white'}}/>
+                                    <Typography variant="body2"><strong>Môn học:</strong> {`${row.subject_name}`}</Typography>
                                     <Typography variant="body2">{row.description}</Typography>
                                 </CardContent>
                                 <CardActions>

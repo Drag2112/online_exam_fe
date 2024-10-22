@@ -2,10 +2,13 @@
     background-color: #ffffff;
     height: 100%;
     margin: 10px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 20px);
 }
 
 .class-container-1 {
-    padding: 20px 25px 10px 25px;
+    padding: 20px 20px 10px 20px;
 }
 
 .class-container-title {

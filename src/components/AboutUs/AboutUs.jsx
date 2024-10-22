@@ -22,7 +22,7 @@ const AboutUs = (props) => {
                     <table>
                         <tr>
                             <td className='aboutus-body-container-table-c1'>Ứng dụng:</td>
-                            <td className='aboutus-body-container-table-row-value'>Hệ thống thi trắc nghiệm online</td>
+                            <td className='aboutus-body-container-table-row-value'>Hệ thống quản lý đề thi và thi trực tuyến</td>
                         </tr>
                         <tr>
                             <td className='aboutus-body-container-table-c1'>Phiên bản:</td>

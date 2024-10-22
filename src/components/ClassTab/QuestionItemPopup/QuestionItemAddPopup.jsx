@@ -7,6 +7,7 @@ import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import SegmentIcon from '@mui/icons-material/Segment';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CodeIcon from '@mui/icons-material/Code';
 import './QuestionItemAddPopup.scss';
 
 const QuestionItemAddPopup = (props) => {
@@ -16,6 +17,7 @@ const QuestionItemAddPopup = (props) => {
     const [questionType, setQuestionType] = useState(QuestionType.Type_1)
     const [questionContent, setQuestionContent] = useState('')
     const [results, setResults] = useState([{resultKey: 1, resultValue: '', isCorrect: false}])
+    const [testcases, setTestcases] = useState([{isSampleCase: true, inputData: '', expectedOutput: ''}])
     const [warningMessage, setWarningMessage] = useState('')
 
     const handleClosePopupQuestion = () => {
@@ -34,6 +36,8 @@ const QuestionItemAddPopup = (props) => {
         
         if (event.target.value === QuestionType.Type_3) {
             setResults([{resultKey: 1, resultValue: '', isCorrect: true}])
+        } else if (event.target.value === QuestionType.Type_4) {
+            setTestcases([{isSampleCase: true, inputData: '', expectedOutput: ''}])
         } else {
             setResults([{resultKey: 1, resultValue: '', isCorrect: false}])
         }
@@ -88,44 +92,77 @@ const QuestionItemAddPopup = (props) => {
         setResults(newResults)
     }
 
+    const handleAddTestCaseItem = () => {
+        setTestcases([...testcases, {isSampleCase: false, inputData: '', expectedOutput: ''}])
+    }
+
+    const handleDeleteTestCaseItem = (itemIndex) => {
+        if (testcases.length === 1) {
+            setWarningMessage('Câu hỏi lập trình cần có ít nhất 1 test case')
+            return
+        }
+
+        const newTestCases = testcases.filter((testcase, index) => index !== itemIndex)
+        setTestcases(newTestCases)
+    }
+
+    const onChangeTestCase = (itemIndex, property, value) => {
+        const newTestCases = testcases.map((testcase, index) => {
+            if (index === itemIndex) {
+                testcase[property] = value
+            }
+            return testcase
+        })
+        setTestcases(newTestCases)
+    }
+
     const handleClickConfirmQuestion = () => {
         if (!questionContent) {
             setWarningMessage('Vui lòng nhập nội dung câu hỏi!')
             return
         }
 
-        const existCorrectResult = results.find(item => item.isCorrect === true)
-        if (!existCorrectResult) {
-            if (questionType === QuestionType.Type_1) {
-                setWarningMessage('Vui lòng tick chọn đáp án đúng của câu hỏi!')
-            } else if (questionType === QuestionType.Type_2) {
-                setWarningMessage('Vui lòng tick chọn ít nhất một đáp án đúng của câu hỏi!')
+        if (questionType !== QuestionType.Type_4) {
+            const existCorrectResult = results.find(item => item.isCorrect === true)
+            if (!existCorrectResult) {
+                if (questionType === QuestionType.Type_1) {
+                    setWarningMessage('Vui lòng tick chọn đáp án đúng của câu hỏi!')
+                } else if (questionType === QuestionType.Type_2) {
+                    setWarningMessage('Vui lòng tick chọn ít nhất một đáp án đúng của câu hỏi!')
+                }
+                
+                return
             }
-            
-            return
+
+            const existEmptyResult = results.find(item => item.resultValue === '')
+            if (existEmptyResult) {
+                if (questionType === QuestionType.Type_3) {
+                    setWarningMessage(`Câu trả lời đang để trống!`)
+                } else {
+                    setWarningMessage(`Đáp án thứ ${existEmptyResult.resultKey} đang để trống!`)
+                }
+                
+                return
+            }
         }
 
-        const existEmptyResult = results.find(item => item.resultValue === '')
-        if (existEmptyResult) {
-            if (questionType === QuestionType.Type_3) {
-                setWarningMessage(`Câu trả lời đang để trống!`)
-            } else {
-                setWarningMessage(`Đáp án thứ ${existEmptyResult.resultKey} đang để trống!`)
-            }
-            
-            return
+        const newQuestion = { 
+            questionNumber, 
+            questionType, 
+            questionContent, 
+            results: questionType !== QuestionType.Type_4 ? results : [], 
+            testcases: questionType === QuestionType.Type_4 ? testcases : []
         }
-
-        const newQuestion = { questionNumber, questionType, questionContent, results }
         context.setQuestions([...context.questions, newQuestion])
         setQuestionType(QuestionType.Type_1)
         setQuestionContent('')
         setResults([{resultKey: 1, resultValue: '', isCorrect: false}])
+        setTestcases([{isSampleCase: true, inputData: '', expectedOutput: ''}])
         handleClosePopupQuestion()
     }
 
     return (
-        <Modal centered className='question-item-add-popup-modal' backdropClassName='question-item-add-popup-backdrop-modal'
+        <Modal centered scrollable className='question-item-add-popup-modal' backdropClassName='question-item-add-popup-backdrop-modal'
             size='lg' show={context.openQuestionAddPopup} onHide={handleClosePopupQuestion}
         >
             <Modal.Header closeButton>
@@ -134,7 +171,7 @@ const QuestionItemAddPopup = (props) => {
             <Modal.Body>
                 <div>
                     <Stack direction='row'>
-                        <TextField variant='outlined' label='Nội dung câu hỏi' placeholder='Nhập nội dung câu hỏi' fullWidth multiline rows={4}
+                        <TextField variant='outlined' label='Nội dung câu hỏi' placeholder='Nhập nội dung câu hỏi' fullWidth multiline rows={4.5}
                             value={questionContent} onChange={handleChangeQuestionContent} onKeyDown={() => setWarningMessage('')}
                         />
                         <Stack direction='column' spacing={2} width='265px' minWidth='265px' marginLeft={2}>
@@ -159,10 +196,22 @@ const QuestionItemAddPopup = (props) => {
                                             <Typography>{QuestionTypeName[QuestionType.Type_3]}</Typography>
                                         </Stack>                                    
                                     </MenuItem>
+                                    <MenuItem value={QuestionType.Type_4}>
+                                        <Stack direction='row' spacing={1} alignItems='center'>
+                                            <CodeIcon fontSize='small'/>
+                                            <Typography>{QuestionTypeName[QuestionType.Type_4]}</Typography>
+                                        </Stack>                                    
+                                    </MenuItem>
                                 </Select>
                             </FormControl>
-                            {questionType !== QuestionType.Type_3 && (
-                                <Button variant='contained' onClick={handleAddResult}>Thêm lựa chọn</Button>
+                            {[QuestionType.Type_1, QuestionType.Type_2].includes(questionType) && (
+                                <Button variant='contained' className='question-item-add-popup-add-option-button' onClick={handleAddResult}>Thêm lựa chọn</Button>
+                            )}
+                            {questionType === QuestionType.Type_4 && (
+                                <Stack direction='column' spacing={1}>
+                                    <Typography >Số lượng testcase: {testcases.length}</Typography>
+                                    <Button variant='contained' className='question-item-add-popup-add-option-button' onClick={handleAddTestCaseItem}>Thêm test case</Button>
+                                </Stack>
                             )}
                         </Stack>
                     </Stack>
@@ -197,12 +246,38 @@ const QuestionItemAddPopup = (props) => {
                             </Stack>
                         ))
                     ))}
+                    {questionType === QuestionType.Type_4 && testcases.map((testcase, index) => (
+                        <Stack direction='column' spacing={0.5} marginTop={2} marginX={2} marginBottom={1}>
+                            <Stack direction='row' spacing={2} alignItems='center'>
+                                <Typography classes={{ root: 'question-item-add-popup-testcase-no-root'}}>Test case số {index + 1}</Typography>
+                                <Stack direction='row' width='100%' justifyContent='space-between'>
+                                    <Stack direction='row' alignItems='center'>
+                                        <Checkbox inputProps={{ 'aria-label': 'controlled' }} checked={testcase.isSampleCase}
+                                            onChange={(event) => onChangeTestCase(index, 'isSampleCase', event.target.checked)}
+                                        />
+                                        <Typography>Là testcase mẫu</Typography>
+                                    </Stack>
+                                    <IconButton onClick={() => handleDeleteTestCaseItem(index)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Stack>
+                            </Stack>
+                            <Stack direction='row' spacing={2}>
+                                <TextField variant='outlined' label='Đầu vào' placeholder='Nhập dữ liệu đầu vào' fullWidth multiline rows={2} 
+                                    value={testcase.inputData} onChange={(event) => onChangeTestCase(index, 'inputData', event.target.value)}
+                                />
+                                <TextField variant='outlined' label='Đầu ra mong muốn' placeholder='Nhập dữ liệu đầu ra mong muốn' fullWidth multiline rows={2} 
+                                    value={testcase.expectedOutput} onChange={(event) => onChangeTestCase(index, 'expectedOutput', event.target.value)}
+                                />
+                            </Stack>
+                        </Stack>
+                    ))}
                     <div>
                         <span className='question-item-add-popup-warning-message'>{warningMessage}</span>
                     </div>
                     <Stack direction='row' justifyContent='center' marginTop={2}>
-                        <Button variant='contained' className='question-item-add-popup-confirm-button' onClick={handleClickConfirmQuestion}>Thêm</Button>
                         <Button variant='contained' className='question-item-add-popup-cancel-button' onClick={handleClosePopupQuestion}>Hủy</Button>
+                        <Button variant='contained' className='question-item-add-popup-confirm-button' onClick={handleClickConfirmQuestion}>Thêm</Button>
                     </Stack>
                 </div>
             </Modal.Body>

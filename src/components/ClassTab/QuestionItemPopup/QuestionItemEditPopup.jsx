@@ -7,6 +7,7 @@ import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import SegmentIcon from '@mui/icons-material/Segment';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CodeIcon from '@mui/icons-material/Code';
 import './QuestionItemEditPopup.scss';
 
 const QuestionItemEditPopup = () => {
@@ -15,11 +16,13 @@ const QuestionItemEditPopup = () => {
     const [questionType, setQuestionType] = useState(context.questionEdit.questionType)
     const [questionContent, setQuestionContent] = useState(context.questionEdit.questionContent)
     const [results, setResults] = useState(context.questionEdit.results)
+    const [testcases, setTestcases] = useState(context.questionEdit.testcases)
 
     useEffect(() => {
         setQuestionType(context.questionEdit.questionType)
         setQuestionContent(context.questionEdit.questionContent)
         setResults(context.questionEdit.results)
+        setTestcases(context.questionEdit.testcases)
     }, [context.questionEdit])
 
     const handleClosePopupQuestion = () => context.setOpenQuestionEditPopup(false)
@@ -33,6 +36,8 @@ const QuestionItemEditPopup = () => {
         
         if (event.target.value === QuestionType.Type_3) {
             setResults([{resultKey: 1, resultValue: '', isCorrect: true}])
+        } else if (event.target.value === QuestionType.Type_4) {
+            setTestcases([{isSampleCase: true, inputData: '', expectedOutput: ''}])
         } else {
             setResults([{resultKey: 1, resultValue: '', isCorrect: false}])
         }
@@ -43,6 +48,10 @@ const QuestionItemEditPopup = () => {
             ...results,
             {resultKey: results.length + 1, resultValue: '', isCorrect: false}
         ])
+    }
+
+    const handleAddTestCaseItem = () => {
+        setTestcases([...testcases, {isSampleCase: false, inputData: '', expectedOutput: ''}])
     }
 
     const handleClickDeleteResult = (resultKey) => {
@@ -87,12 +96,33 @@ const QuestionItemEditPopup = () => {
         setResults(newResults)
     }
 
+    const onChangeTestCase = (itemIndex, property, value) => {
+        const newTestCases = testcases.map((testcase, index) => {
+            if (index === itemIndex) {
+                testcase[property] = value
+            }
+            return testcase
+        })
+        setTestcases(newTestCases)
+    }
+
+    const handleDeleteTestCaseItem = (itemIndex) => {
+        if (testcases.length === 1) {
+            // setWarningMessage('Câu hỏi lập trình cần có ít nhất 1 test case')
+            return
+        }
+
+        const newTestCases = testcases.filter((testcase, index) => index !== itemIndex)
+        setTestcases(newTestCases)
+    }
+
     const handleClickConfirmQuestion = () => {
         const newQuestions = context.questions?.map(question => {
             if (question.questionNumber === context.questionEdit.questionNumber) {
                 question.questionType = questionType
                 question.questionContent = questionContent
-                question.results = results
+                question.results = questionType !== QuestionType.Type_4 ? results : []
+                question.testcases = questionType === QuestionType.Type_4 ? testcases : []
             }
             return question
         })
@@ -112,7 +142,7 @@ const QuestionItemEditPopup = () => {
             <Modal.Body>
                 <div>
                     <Stack direction='row'>
-                        <TextField variant='outlined' label='Nội dung câu hỏi' placeholder='Nhập nội dung câu hỏi' fullWidth multiline rows={4}
+                        <TextField variant='outlined' label='Nội dung câu hỏi' placeholder='Nhập nội dung câu hỏi' fullWidth multiline rows={4.5}
                             value={questionContent} onChange={handleChangeQuestionContent}
                         />
                         <Stack direction='column' spacing={2} width='265px' minWidth='265px' marginLeft={2}>
@@ -137,10 +167,22 @@ const QuestionItemEditPopup = () => {
                                             <Typography>{QuestionTypeName[QuestionType.Type_3]}</Typography>
                                         </Stack>                                    
                                     </MenuItem>
+                                    <MenuItem value={QuestionType.Type_4}>
+                                        <Stack direction='row' spacing={1} alignItems='center'>
+                                            <CodeIcon fontSize='small'/>
+                                            <Typography>{QuestionTypeName[QuestionType.Type_4]}</Typography>
+                                        </Stack>                                    
+                                    </MenuItem>
                                 </Select>
                             </FormControl>
-                            {questionType !== QuestionType.Type_3 && (
+                            {[QuestionType.Type_1, QuestionType.Type_2].includes(questionType) && (
                                 <Button variant='contained' onClick={handleAddResult}>Thêm lựa chọn</Button>
+                            )}
+                            {questionType === QuestionType.Type_4 && (
+                                <Stack direction='column' spacing={1}>
+                                    <Typography >Số lượng testcase: {testcases.length}</Typography>
+                                    <Button variant='contained' className='question-item-add-popup-add-option-button' onClick={handleAddTestCaseItem}>Thêm test case</Button>
+                                </Stack>
                             )}
                         </Stack>
                     </Stack>
@@ -175,9 +217,35 @@ const QuestionItemEditPopup = () => {
                             </Stack>
                         ))
                     ))}
+                    {questionType === QuestionType.Type_4 && testcases.map((testcase, index) => (
+                        <Stack direction='column' spacing={0.5} marginTop={2} marginX={2} marginBottom={1}>
+                            <Stack direction='row' spacing={2} alignItems='center'>
+                                <Typography classes={{ root: 'question-item-add-popup-testcase-no-root'}}>Test case số {index + 1}</Typography>
+                                <Stack direction='row' width='100%' justifyContent='space-between'>
+                                    <Stack direction='row' alignItems='center'>
+                                        <Checkbox inputProps={{ 'aria-label': 'controlled' }} checked={testcase.isSampleCase}
+                                            onChange={(event) => onChangeTestCase(index, 'isSampleCase', event.target.checked)}
+                                        />
+                                        <Typography>Là testcase mẫu</Typography>
+                                    </Stack>
+                                    <IconButton onClick={() => handleDeleteTestCaseItem(index)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Stack>
+                            </Stack>
+                            <Stack direction='row' spacing={2}>
+                                <TextField variant='outlined' label='Đầu vào' placeholder='Nhập dữ liệu đầu vào' fullWidth multiline rows={2} 
+                                    value={testcase.inputData} onChange={(event) => onChangeTestCase(index, 'inputData', event.target.value)}
+                                />
+                                <TextField variant='outlined' label='Đầu ra mong muốn' placeholder='Nhập dữ liệu đầu ra mong muốn' fullWidth multiline rows={2} 
+                                    value={testcase.expectedOutput} onChange={(event) => onChangeTestCase(index, 'expectedOutput', event.target.value)}
+                                />
+                            </Stack>
+                        </Stack>
+                    ))}
                     <Stack direction='row' justifyContent='center' marginTop={3}>
-                        <Button variant='contained' className='question-item-edit-popup-confirm-button' onClick={handleClickConfirmQuestion}>Cập nhật</Button>
                         <Button variant='contained' className='question-item-edit-popup-cancel-button' onClick={handleClosePopupQuestion}>Hủy</Button>
+                        <Button variant='contained' className='question-item-edit-popup-confirm-button' onClick={handleClickConfirmQuestion}>Cập nhật</Button>
                     </Stack>
                 </div>
             </Modal.Body>

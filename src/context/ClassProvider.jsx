@@ -5,18 +5,22 @@ const ClassContext = createContext()
 const ClassProvider = ({children}) => {
     const [openAddClassPopup, setOpenAddClassPopup] = useState(false)
     const [openAddDocumentPopup, setOpenAddDocumentPopup] = useState(false)
-    const [openAddExamPopup, setOpenAddExamPopup] = useState(false)
+    const [openSelectExamSourcePopup, setOpenSelectExamSourcePopup] = useState(false)
+    const [openAddExistExamPopup, setOpenAddExistExamPopup] = useState(false)
+    const [openCodingRoomPopup, setOpenCodingRoomPopup] = useState(false)
     const [questions, setQuestions] = useState([])
     const [openQuestionAddPopup, setOpenQuestionAddPopup] = useState(false)
     const [openQuestionEditPopup, setOpenQuestionEditPopup] = useState(false)
-    const [questionEdit, setQuestionEdit] = useState({questionNumber: 0, questionType: '', questionContent: '', results: []})
+    const [questionEdit, setQuestionEdit] = useState({questionNumber: 0, questionType: '', questionContent: '', results: [], testcases: []})
     const [reloadDocument, setReloadDocument] = useState(false)
     const [reloadCreatedExamList, setReloadCreatedExamList] = useState(false)
     
     const value = {
         openAddClassPopup, setOpenAddClassPopup,
         openAddDocumentPopup, setOpenAddDocumentPopup,
-        openAddExamPopup, setOpenAddExamPopup,
+        openSelectExamSourcePopup, setOpenSelectExamSourcePopup,
+        openAddExistExamPopup, setOpenAddExistExamPopup,
+        openCodingRoomPopup, setOpenCodingRoomPopup,
         questions, setQuestions,
         openQuestionAddPopup, setOpenQuestionAddPopup,
         openQuestionEditPopup, setOpenQuestionEditPopup,

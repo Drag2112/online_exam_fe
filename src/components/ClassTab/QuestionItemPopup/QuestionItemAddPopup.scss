@@ -21,13 +21,29 @@
     padding-left: 20px;
 }
 
+.question-item-add-popup-add-option-button {
+    width: 100%;
+    height: 32px;
+    text-transform: none !important;
+}
+
 .question-item-add-popup-confirm-button {
-    width: 110px;
+    width: 95px;
+    height: 32px;
     margin: 0 5px !important;
+    text-transform: none !important;
 }
 
 .question-item-add-popup-cancel-button {
-    width: 110px;
+    width: 95px;
+    height: 32px;
     margin: 0 5px !important;
+    text-transform: none !important;
     background-color: #a1a1a1 !important;
+}
+
+.question-item-add-popup-testcase-no-root {
+    text-wrap: nowrap;
+    color: #376fd0;
+    font-weight: 600 !important;
 }

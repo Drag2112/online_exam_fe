@@ -62,7 +62,7 @@ const Header = () => {
             <div className='header-container-0-1'>
                 <div className='d-flex flex-row align-items-center'>
                     <img src={logoHeader} alt="logo" className='header-container-1-logo-img' onClick={handleClickLogo}/>
-                    <span className='header-container-1-title'>HỆ THỐNG THI TRẮC NGHIỆM ONLINE</span>
+                    <span className='header-container-1-title'>HỆ THỐNG QUẢN LÝ ĐỀ THI & THI TRỰC TUYẾN</span>
                 </div>
                 <div className='d-flex flex-row align-items-center'>
                     {email && fullName && (

@@ -219,7 +219,7 @@ const ClassExamTab = () => {
                 <Box sx={context.questions.length > 0 ? {border: '1px solid #b0b0b0', borderRadius: '6px', padding: '15px', marginBottom: 4, overflow: 'auto', maxHeight: '560px'} : {}}>
                     {context.questions.map((question) => (
                         <QuestionItem questionNumber={question.questionNumber} questionType={question.questionType}
-                            questionContent={question.questionContent} results={question.results} 
+                            questionContent={question.questionContent} results={question.results} testcases={question.testcases}
                         />
                     ))}
                 </Box>

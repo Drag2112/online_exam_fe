@@ -1,3 +1,4 @@
+import './ClassDetailTab.scss';
 import Paper from '@mui/material/Paper';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
@@ -9,17 +10,19 @@ import ExamTable from './ExamTable/ExamTable';
 import PublishedExamTable from './PublishedExamTable/PublishedExamTable';
 import UserList from './UserList/UserList';
 import DocumentList from './DocumentList/DocumentList';
-import AddExamPopup from './AddExamPopup/AddExamPopup';
 import AddDocumentPopup from './AddDocumentPopup/AddDocumentPopup';
-import { AccessDenied } from '../shared';
+import { AccessDenied, AddNewExamPopup } from '../shared';
 import { QUERY_PARAM_KEY, ROUTE_PATH } from '../../config/routes.config';
 import { ClassContext } from '../../context/ClassProvider';
+import { AppContext } from '../../context/AppProvider';
 import React, { useContext, useEffect, useState } from 'react';
 import { useQueryParams } from '../../hook';
 import { API } from '../../api/api';
 import { LOCAL_STORAGE_KEY } from '../../config/memory.config';
 import { FUNCTION_CODE } from '../../config/authorization.config';
-import './ClassDetailTab.scss';
+import { AddExamPopupLocation } from '../../config/app.config';
+import SelectExamSource from './AddExemPopup/SelectExamSource';
+import AddExistExam from './AddExemPopup/AddExistExam';
 
 
 const ClassDetailTab = () => {
@@ -28,17 +31,20 @@ const ClassDetailTab = () => {
         className: '',
         teacherName: '',
         description: '',
+        subjectCode: '',
+        subjectName: '',
         students: []
     })
 
-    const context = useContext(ClassContext)
+    const appContext = useContext(AppContext)
+    const classContext = useContext(ClassContext)
 
     const handleClickAddDocumentPopup = () => {
-        context.setOpenAddDocumentPopup(true)
+        classContext.setOpenAddDocumentPopup(true)
     }
 
     const handleClickAddExamPopup = () => {
-        context.setOpenAddExamPopup(true)
+        classContext.setOpenSelectExamSourcePopup(true)
     }
 
     const queryParams = useQueryParams()
@@ -74,7 +80,10 @@ const ClassDetailTab = () => {
                             <div className='col-8'>
                                 <div className='d-flex flex-column'>
                                     <div className='class-detail-class-infor'>
-                                        <div className='class-detail-class-title'><strong>Mã lớp: </strong>{classInfor.classCode}</div>
+                                        <div className='class-detail-class-title'><strong>Tên lớp: </strong>{classInfor.className} (<strong>Mã lớp: </strong>{classInfor.classCode})</div>
+                                    </div>
+                                    <div className='class-detail-class-infor'>
+                                        <div className='class-detail-class-title'><strong>Môn học: </strong>{classInfor.subjectName}</div>
                                     </div>
                                     <div className='class-detail-class-infor'>
                                         <div className='class-detail-class-title'><strong>Giáo viên phụ trách: </strong>{classInfor.teacherName}</div>
@@ -86,12 +95,12 @@ const ClassDetailTab = () => {
                                     {functionCodes.includes(FUNCTION_CODE.CREATE_CLASS) ? 
                                         <div className='class-detail-class-infor mt-4'>
                                             <div className='d-flex flex-row row class-detail-class-title'>
-                                                <div className='col-8'><strong>Danh sách bài thi đã tạo:</strong></div>
+                                                <div className='col-8'><strong>Danh sách đề thi đã tạo:</strong></div>
                                                 <div className='col-4 d-flex justify-content-end'>
                                                     <Button variant='contained' sx={{width: '150px', height: '30px', fontSize: '14px'}}
                                                         classes={{root: 'class-detail-button-root'}} onClick={handleClickAddExamPopup}
                                                     >
-                                                        Tạo bài thi
+                                                        Tạo đề thi
                                                     </Button>
                                                 </div>
                                             </div>
@@ -135,7 +144,13 @@ const ClassDetailTab = () => {
                             </div>
                         </div>
                     </div>
-                    <AddExamPopup className={classInfor.className} />
+                    <SelectExamSource />
+                    <AddExistExam />
+                    <AddNewExamPopup 
+                        className={classInfor.className} 
+                        location={AddExamPopupLocation.CLASS_DETAIL_PAGE} 
+                        subjectOfClass={{subjectCode: classInfor.subjectCode, subjectName: classInfor.subjectName}}
+                    />
                     <AddDocumentPopup classId={classId} teacherId={userId}/>
                     <div style={{height: '40px'}}></div>
                 </div> : 

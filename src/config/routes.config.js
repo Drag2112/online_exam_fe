@@ -30,7 +30,7 @@ export const ROUTE_PATH = {
 export const routes = [
     { key: ROUTE_KEY.DASHBOARD, path: ROUTE_PATH.DASHBOARD, name: 'Dashboard', icon: <DashboardIcon />, functionCode: FUNCTION_CODE.VIEW_DASHBOARD_TAB, subRoutes: [], },
     { key: ROUTE_KEY.CLASS, path: ROUTE_PATH.CLASS, name: 'Danh sách lớp học', icon: <ClassIcon />, functionCode: FUNCTION_CODE.VIEW_CLASS_TAB, subRoutes: [], },
-    { key: ROUTE_KEY.EXAM_MANAGEMENT, path: ROUTE_PATH.EXAM_MANAGEMENT, name: 'Quản lý đề thi', icon: <QuizIcon />, functionCode: FUNCTION_CODE.VIEW_ADMIN_TAB, subRoutes: [], },
+    { key: ROUTE_KEY.EXAM_MANAGEMENT, path: ROUTE_PATH.EXAM_MANAGEMENT, name: 'Kho đề thi', icon: <QuizIcon />, functionCode: FUNCTION_CODE.VIEW_ADMIN_TAB, subRoutes: [], },
     { key: ROUTE_KEY.ADMIN, path: ROUTE_PATH.ADMIN, name: 'Quản lý người dùng', icon: <AdminPanelSettingsIcon />, functionCode: FUNCTION_CODE.VIEW_ADMIN_TAB, subRoutes: [], },
 ]
 

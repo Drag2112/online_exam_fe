@@ -112,7 +112,6 @@ const ClassTab = () => {
                             <JoinedClassList rows={joinedList}/>
                         </div>
                     )}
-                    <div style={{height: '40px'}}></div>
                     <AddClassPopup setRefreshDataTable={setRefreshDataTable}/>
                 </div> :
                 <AccessDenied />

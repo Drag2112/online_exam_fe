@@ -97,6 +97,7 @@ const DataTable = (props) => {
                             <TableCell align='center' className='class-tab-table-header'>STT</TableCell>
                             <TableCell align='left' className='class-tab-table-header'>Mã lớp</TableCell>
                             <TableCell align='left' className='class-tab-table-header'>Tên lớp</TableCell>
+                            <TableCell align='left' className='class-tab-table-header'>Tên môn học</TableCell>
                             <TableCell align='left' className='class-tab-table-header'>Giáo viên phụ trách</TableCell>
                             <TableCell align='right' className='class-tab-table-header'>Số học sinh tham gia</TableCell>
                             <TableCell align='right' className='class-tab-table-header'>Số bài thi cần vượt qua</TableCell>
@@ -109,6 +110,7 @@ const DataTable = (props) => {
                             <TableCell align='center'>{index + 1}</TableCell>
                             <TableCell align='left'>{row.class_code}</TableCell>
                             <TableCell align='left'>{row.class_name}</TableCell>
+                            <TableCell align='left'>{row.subject_name}</TableCell>
                             <TableCell align='left'>{row.teacher_name}</TableCell>
                             <TableCell align='right'>{row.total_student}</TableCell>
                             <TableCell align='right'>{row.total_exam}</TableCell>

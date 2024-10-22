@@ -19,13 +19,15 @@ export const DefaultPassword = 'Hanoi@123'
 export const QuestionType = {
     Type_1: 'Type_1',
     Type_2: 'Type_2',
-    Type_3: 'Type_3'
+    Type_3: 'Type_3',
+    Type_4: 'Type_4'
 }
 
 export const QuestionTypeName = {
     Type_1: 'Trắc nghiệm một đáp án',
     Type_2: 'Trắc nghiệm nhiều đáp án',
-    Type_3: 'Đoạn trả lời ngắn'
+    Type_3: 'Đoạn trả lời ngắn',
+    Type_4: 'Câu hỏi lập trình'
 }
 
 export const ToastId = {
@@ -48,4 +50,14 @@ export const ToastId = {
 export const ExamRoomActionType = {
     VIEW: 'view',
     JOIN: 'join'
+}
+
+export const AddExamPopupLocation = {
+    CLASS_DETAIL_PAGE: 'class_detail',
+    EXAM_MANAGEMENT_PAGE: 'exam_management' 
+}
+
+export const MenuSelectSize = {
+    ITEM_HEIGHT: 48,
+    ITEM_PADDING_TOP: 8
 }

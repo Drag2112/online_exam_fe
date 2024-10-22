@@ -1,0 +1,36 @@
+.spinner-box {
+    background-color: #2e2e2e;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+}
+
+.spinner-box img {
+    width: 100px;
+}
+
+.output-box {
+    background-color: #2e2e2e;
+    overflow-y: auto;
+    color: white;
+    position: relative;
+    height: 180px;
+    padding: 8px 16px;
+} 
+
+.clear-btn {
+    position: absolute !important;
+    bottom: 14px;
+    right: 18px;
+    height: 32px;
+    text-transform: none !important;
+    background-color: #474747 !important;
+    border: 1px solid #afec3f !important;
+}
+
+.output-box pre {
+    font-size: 15px;
+    white-space: pre-wrap;
+}
