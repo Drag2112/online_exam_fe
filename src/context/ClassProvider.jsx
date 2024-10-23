@@ -7,7 +7,7 @@ const ClassProvider = ({children}) => {
     const [openAddDocumentPopup, setOpenAddDocumentPopup] = useState(false)
     const [openSelectExamSourcePopup, setOpenSelectExamSourcePopup] = useState(false)
     const [openAddExistExamPopup, setOpenAddExistExamPopup] = useState(false)
-    const [openCodingRoomPopup, setOpenCodingRoomPopup] = useState(false)
+    const [openCodingRoomPopup, setOpenCodingRoomPopup] = useState({key: null, status: false})
     const [questions, setQuestions] = useState([])
     const [openQuestionAddPopup, setOpenQuestionAddPopup] = useState(false)
     const [openQuestionEditPopup, setOpenQuestionEditPopup] = useState(false)

@@ -10,7 +10,7 @@ import TerminalIcon from '@mui/icons-material/Terminal';
 
 const QuestionItemRoom = (props) => {
     const context = useContext(ClassContext)
-    const { actionType, questionNumber, questionType, questionContent, results, testcases } = props
+    const { actionType, examId, questionNumber, questionType, questionContent, results, testcases, sourceCode } = props
     const [userResults, setUserResults] = useState(results)
 
     useEffect(() => {
@@ -62,7 +62,9 @@ const QuestionItemRoom = (props) => {
         handleChangeUserResult(newUserResults)
     }
 
-    const onClickCodeButton = () => context.setOpenCodingRoomPopup(true)
+    const onClickCodeButton = (activePopupNumber) => {
+        context.setOpenCodingRoomPopup({key: activePopupNumber, status: true})
+    }
 
     return (
         <Paper elevation={2}>
@@ -71,7 +73,7 @@ const QuestionItemRoom = (props) => {
                     <Typography sx={{ fontWeight: '600', color: '#376fd0', marginBottom: 0.5 }}>Câu hỏi {questionNumber} - {QuestionTypeName[questionType]}</Typography>
                     {questionType === QuestionType.Type_4 && (
                         <Tooltip title='Trình soạn thảo code'>
-                            <IconButton onClick={onClickCodeButton}>
+                            <IconButton onClick={() => onClickCodeButton(questionNumber)}>
                                 <TerminalIcon sx={{color: '#376fd0'}} />
                             </IconButton>
                         </Tooltip>
@@ -158,7 +160,7 @@ const QuestionItemRoom = (props) => {
                                 </Stack>
                             ))}
                         </Stack>
-                        <CodingRoomPopup questionNumber={questionNumber} questionContent={questionContent} sampleTestCases={testcases} />
+                        <CodingRoomPopup examId={examId} questionNumber={Number(questionNumber)} sourceCode={sourceCode} />
                     </React.Fragment>
                 )}
             </Box>
